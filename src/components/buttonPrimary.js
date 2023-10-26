@@ -15,13 +15,12 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderRadius: 100,
     backgroundColor: "#FF6C00",
-    fontSize: 16,
   },
 
   textBtn: {
     textAlign: "center",
     fontFamily: "Roboto",
-    fontSize: 13,
+    fontSize: 16,
     fontStyle: "normal",
     fontWeight: "normal",
     color: "#fff",

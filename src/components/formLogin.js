@@ -6,7 +6,6 @@ const FormLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isFocused, setIsFocused] = useState(false);
-
   const id = Math.floor(Math.random() * 100000);
 
   const handleSubmit = () => {
@@ -15,7 +14,6 @@ const FormLogin = () => {
       email,
       password,
     };
-    console.log(data);
     setEmail("");
     setPassword("");
   };

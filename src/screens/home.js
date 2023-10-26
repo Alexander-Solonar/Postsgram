@@ -1,16 +1,9 @@
-import React from "react";
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import PostsScreen from "./postsScreen";
-
-function Profile() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Profile!</Text>
-    </View>
-  );
-}
+import CreatePostsScreen from "./createPostsScreen";
+import { ButtonArrowLeft, ButtonUpload } from "../components/iconButtons";
 
 function User() {
   return (
@@ -42,15 +35,25 @@ const tabBarItemStyle = {
   borderRadius: 50,
 };
 
+const styleHeader = {
+  headerTitleAlign: "center",
+  headerStyle: { borderBottomWidth: 1 },
+  headerTitleStyle: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "#212121",
+  },
+};
+
 const Home = () => {
   return (
     <Tabs.Navigator
       initialRouteName="PostsScreen"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
-          if (route.name === "Profile") {
+          if (route.name === "Публікації") {
             return createIconComponent(Feather, "grid", focused);
-          } else if (route.name === "PostsScreen") {
+          } else if (route.name === "Створити") {
             return createIconComponent(Ionicons, "add", focused);
           } else if (route.name === "User") {
             return createIconComponent(Feather, "user", focused);
@@ -63,21 +66,29 @@ const Home = () => {
       })}
     >
       <Tabs.Screen
-        name="Profile"
-        component={Profile}
-        options={{ headerShown: false }}
+        name="Публікації"
+        component={PostsScreen}
+        options={{
+          ...styleHeader,
+          headerRight: () => <ButtonUpload />,
+        }}
       />
       <Tabs.Screen
-        name="PostsScreen"
-        component={PostsScreen}
-        options={{ headerShown: false }}
+        name="Створити"
+        component={CreatePostsScreen}
+        options={{
+          ...styleHeader,
+          headerLeft: () => <ButtonArrowLeft />,
+          tabBarStyle: { display: "none" },
+        }}
       />
-
       <Tabs.Screen
         name="User"
         component={User}
         options={{
-          headerShown: false,
+          ...styleHeader,
+          headerLeft: () => <ButtonArrowLeft />,
+          tabBarStyle: { display: "none" },
         }}
       />
     </Tabs.Navigator>

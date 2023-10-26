@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -5,14 +6,11 @@ import {
   Image,
   SafeAreaView,
   FlatList,
-  ScrollView,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
 import avatar from "../assets/images/user.jpg";
 import post from "../assets/images/post.jpg";
-
-import { useState } from "react";
-import { Feather } from "@expo/vector-icons";
 
 const COURSES = [
   {
@@ -53,7 +51,7 @@ const PostsScreen = () => {
           <Text style={styles.email}>{data.email}</Text>
         </View>
       </View>
-      <View style={styles.post}>
+      <SafeAreaView style={styles.post}>
         <FlatList
           data={courses}
           keyExtractor={(item) => item.id}
@@ -76,7 +74,7 @@ const PostsScreen = () => {
             </View>
           )}
         />
-      </View>
+      </SafeAreaView>
     </View>
   );
 };

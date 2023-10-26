@@ -25,9 +25,9 @@ const RegistrationScreen = () => {
           </View>
           <Text style={styles.title}>Реєстрація</Text>
           <KeyboardAvoidingView
-            style={styles.box}
+            style={{ width: "100%" }}
             behavior="padding"
-            keyboardVerticalOffset={50}
+            keyboardVerticalOffset={40}
           >
             <FormRegistration />
             <Text
@@ -67,9 +67,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
   },
 
-  box: {
-    width: "100%",
-  },
   title: {
     marginBottom: 33,
     textAlign: "center",

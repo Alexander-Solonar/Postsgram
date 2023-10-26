@@ -1,13 +1,12 @@
-import { StatusBar, Image } from "expo-status-bar";
-import { useFonts } from "expo-font";
-import { StyleSheet, View, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { StyleSheet } from "react-native";
+import { useFonts } from "expo-font";
 import "react-native-gesture-handler";
 import RegistrationScreen from "./src/screens/registrationScreen";
+import CreatePostsScreen from "./src/screens/createPostsScreen";
 import LoginScreen from "./src/screens/loginScreen";
 import Home from "./src/screens/home";
-import ButtonUpload from "./src/components/buttonUpload";
 
 const MainStack = createStackNavigator();
 
@@ -32,27 +31,16 @@ export default () => {
         <MainStack.Screen
           name="Home"
           component={Home}
-          options={styleHomeHeader}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="CreatePostsScreen"
+          component={CreatePostsScreen}
+          options={{ headerShown: false }}
         />
       </MainStack.Navigator>
     </NavigationContainer>
   );
-};
-
-const styleHomeHeader = {
-  title: "Публікації",
-  headerStyle: { borderBottomWidth: 1 },
-  headerContainerStyle: {},
-  headerTitleStyle: {
-    fontFamily: "Roboto",
-    fontWeight: "bold",
-    fontSize: 17,
-  },
-
-  headerTitleAlign: "center",
-  headerTintColor: "#212121",
-  headerLeft: null,
-  headerRight: () => <ButtonUpload />,
 };
 
 const styles = StyleSheet.create({
