@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { AntDesign, Feather } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const ButtonUpload = () => {
   return (
@@ -14,8 +15,12 @@ const ButtonUpload = () => {
 };
 
 const ButtonArrowLeft = () => {
+  const navigation = useNavigation();
   return (
     <Feather
+      onPress={() => {
+        navigation.goBack();
+      }}
       style={styles.btnArrowLeft}
       name="arrow-left"
       size={24}

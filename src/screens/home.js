@@ -1,17 +1,9 @@
-import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import PostsScreen from "./postsScreen";
 import CreatePostsScreen from "./createPostsScreen";
 import { ButtonArrowLeft, ButtonUpload } from "../components/iconButtons";
-
-function User() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>User!</Text>
-    </View>
-  );
-}
+import ProfileScreen from "./profileScreen";
 
 const Tabs = createBottomTabNavigator();
 
@@ -79,12 +71,13 @@ const Home = () => {
         options={{
           ...styleHeader,
           headerLeft: () => <ButtonArrowLeft />,
+
           tabBarStyle: { display: "none" },
         }}
       />
       <Tabs.Screen
         name="User"
-        component={User}
+        component={ProfileScreen}
         options={{
           ...styleHeader,
           headerLeft: () => <ButtonArrowLeft />,

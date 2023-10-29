@@ -41,7 +41,7 @@ const CreatePostsScreen = () => {
               />
             </View>
           </View>
-          <View style={{ alignItems: "center" }}>
+          <View style={styles.blockBtn}>
             <TouchableOpacity style={styles.button}>
               <Text style={styles.textBtn}>Опубліковати</Text>
             </TouchableOpacity>
@@ -58,7 +58,8 @@ const CreatePostsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-end",
+    paddingVertical: 32,
     paddingHorizontal: 16,
     backgroundColor: "#fff",
   },
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     position: "relative",
     width: "100%",
     height: 240,
-    marginBottom: 68,
+    marginBottom: 8,
     borderWidth: 1,
     borderRadius: 8,
     borderColor: "#E8E8E8",
@@ -116,7 +117,6 @@ const styles = StyleSheet.create({
   button: {
     width: "100%",
     padding: 16,
-    marginBottom: 30,
     borderRadius: 100,
     backgroundColor: "#F6F6F6",
   },
@@ -135,9 +135,15 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: 70,
     height: 40,
-    marginBottom: 20,
     borderRadius: 40,
     backgroundColor: "#F6F6F6",
+  },
+
+  blockBtn: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    rowGap: 15,
   },
 });
 
