@@ -4,7 +4,7 @@ import {
   View,
   Text,
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
+  Pressable,
   Keyboard,
 } from "react-native";
 import image from "../assets/images/photo.jpg";
@@ -16,7 +16,7 @@ const LoginScreen = () => {
 
   return (
     <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Pressable onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <Text style={styles.title}>Увійти</Text>
           <KeyboardAvoidingView style={styles.box} behavior="padding">
@@ -29,7 +29,7 @@ const LoginScreen = () => {
             </Text>
           </KeyboardAvoidingView>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     </ImageBackground>
   );
 };

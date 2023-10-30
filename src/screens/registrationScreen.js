@@ -5,7 +5,7 @@ import {
   Text,
   KeyboardAvoidingView,
   Image,
-  TouchableWithoutFeedback,
+  Pressable,
   Keyboard,
 } from "react-native";
 import image from "../assets/images/photo.jpg";
@@ -18,7 +18,7 @@ const RegistrationScreen = () => {
 
   return (
     <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Pressable onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.avatar}>
             <Image style={styles.iconAdd} source={iconAdd} />
@@ -38,7 +38,7 @@ const RegistrationScreen = () => {
             </Text>
           </KeyboardAvoidingView>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     </ImageBackground>
   );
 };

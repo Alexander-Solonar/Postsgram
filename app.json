@@ -1,5 +1,6 @@
 {
   "expo": {
+    "jsEngine": "hermes",
     "name": "Postsgram",
     "slug": "Postsgram",
     "version": "1.0.0",

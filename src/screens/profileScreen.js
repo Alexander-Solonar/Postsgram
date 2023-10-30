@@ -1,25 +1,79 @@
-import { View, Text, StyleSheet } from "react-native";
+import { ImageBackground, StyleSheet, View, Text, Image } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Post from "../components/post";
+import image from "../assets/images/photo.jpg";
+import { ButtonUpload } from "../components/iconButtons";
+import iconAdd from "../assets/images/iconAdd.png";
+
 const ProfileScreen = () => {
+  const data = {
+    login: "Natali Romanova",
+    email: "email@example.com",
+  };
+  const navigation = useNavigation();
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>
-        No apps connected. Sending "devMenu" to all React Native apps failed.
-        Make sure your app is running in the simulator or on a phone connected
-        via USB.
-      </Text>
-    </View>
+    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+      <View style={styles.container}>
+        <View style={styles.avatar}>
+          <Image style={styles.iconAdd} source={iconAdd} />
+        </View>
+        <View style={styles.btnOut}>
+          <ButtonUpload />
+        </View>
+        <Text style={styles.title}>{data.login}</Text>
+        <Post like={true} />
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  image: {
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: -80,
+    paddingTop: 120,
+  },
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "red",
-  },
-  text: {
-    flex: 1,
+    paddingTop: 22,
+    paddingHorizontal: 16,
+
+    alignItems: "center",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
     backgroundColor: "#fff",
+  },
+
+  avatar: {
+    position: "absolute",
+    top: -60,
+    width: 120,
+    height: 120,
+    borderRadius: 16,
+    backgroundColor: "#F6F6F6",
+  },
+  iconAdd: {
+    position: "absolute",
+    right: -12,
+    bottom: 20,
+  },
+
+  btnOut: {
+    marginLeft: "auto",
+    marginBottom: 46,
+  },
+
+  title: {
+    marginBottom: 33,
+    textAlign: "center",
+    fontFamily: "Roboto",
+    fontSize: 30,
+    fontStyle: "normal",
+    fontWeight: "bold",
+    letterSpacing: 0.3,
+    color: "#212121",
   },
 });
 

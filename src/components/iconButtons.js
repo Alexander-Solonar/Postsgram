@@ -4,8 +4,12 @@ import { AntDesign, Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
 const ButtonUpload = () => {
+  const navigation = useNavigation();
   return (
     <AntDesign
+      onPress={() => {
+        navigation.goBack();
+      }}
       style={styles.btnUpload}
       name="upload"
       size={24}

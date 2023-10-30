@@ -40,14 +40,14 @@ const styleHeader = {
 const Home = () => {
   return (
     <Tabs.Navigator
-      initialRouteName="PostsScreen"
+      initialRouteName="ProfileScreen"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
           if (route.name === "Публікації") {
             return createIconComponent(Feather, "grid", focused);
           } else if (route.name === "Створити") {
             return createIconComponent(Ionicons, "add", focused);
-          } else if (route.name === "User") {
+          } else if (route.name === "Профіль") {
             return createIconComponent(Feather, "user", focused);
           }
         },
@@ -76,12 +76,10 @@ const Home = () => {
         }}
       />
       <Tabs.Screen
-        name="User"
+        name="Профіль"
         component={ProfileScreen}
         options={{
-          ...styleHeader,
-          headerLeft: () => <ButtonArrowLeft />,
-          tabBarStyle: { display: "none" },
+          headerShown: false,
         }}
       />
     </Tabs.Navigator>

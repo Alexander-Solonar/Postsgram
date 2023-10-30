@@ -7,6 +7,8 @@ import RegistrationScreen from "./src/screens/registrationScreen";
 import CreatePostsScreen from "./src/screens/createPostsScreen";
 import LoginScreen from "./src/screens/loginScreen";
 import Home from "./src/screens/home";
+import PostsScreen from "./src/screens/postsScreen";
+import ProfileScreen from "./src/screens/profileScreen";
 
 const MainStack = createStackNavigator();
 
@@ -34,8 +36,18 @@ export default () => {
           options={{ headerShown: false }}
         />
         <MainStack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
           name="CreatePostsScreen"
           component={CreatePostsScreen}
+          options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="PostsScreen"
+          component={PostsScreen}
           options={{ headerShown: false }}
         />
       </MainStack.Navigator>

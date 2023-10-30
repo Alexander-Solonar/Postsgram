@@ -2,20 +2,17 @@ import {
   StyleSheet,
   View,
   Text,
-  TouchableWithoutFeedback,
   Keyboard,
   TextInput,
-  TouchableOpacity,
+  Pressable,
   KeyboardAvoidingView,
-  ScrollView,
-  Button,
 } from "react-native";
 import { Ionicons, Feather } from "@expo/vector-icons";
 
 const CreatePostsScreen = () => {
   return (
     <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <Pressable onPress={Keyboard.dismiss} style={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.image}>
             <View style={styles.camera}>
@@ -42,15 +39,15 @@ const CreatePostsScreen = () => {
             </View>
           </View>
           <View style={styles.blockBtn}>
-            <TouchableOpacity style={styles.button}>
+            <Pressable style={styles.button}>
               <Text style={styles.textBtn}>Опубліковати</Text>
-            </TouchableOpacity>
+            </Pressable>
             <View style={styles.btnDelete}>
               <Feather name="trash-2" size={24} color="#BDBDBD" />
             </View>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     </KeyboardAvoidingView>
   );
 };

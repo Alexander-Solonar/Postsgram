@@ -19,7 +19,7 @@ const FormRegistration = () => {
       email,
       password,
     };
-    navigation.navigate("Home", { screen: "PostsScreen", params: data });
+    navigation.navigate("Home", { screen: "ProfileScreen", params: data });
 
     setLogin("");
     setEmail("");
