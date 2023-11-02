@@ -17,11 +17,15 @@ const RegistrationScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+    <ImageBackground
+      source={image}
+      resizeMode="cover"
+      style={styles.imageBackground}
+    >
       <Pressable onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <View style={styles.avatar}>
-            <Image style={styles.iconAdd} source={iconAdd} />
+          <View style={styles.userAvatar}>
+            <Image style={styles.iconAddAvatar} source={iconAdd} />
           </View>
           <Text style={styles.title}>Реєстрація</Text>
           <KeyboardAvoidingView
@@ -44,7 +48,7 @@ const RegistrationScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  image: {
+  imageBackground: {
     flex: 1,
     justifyContent: "flex-end",
   },
@@ -58,13 +62,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 
-  avatar: {
+  userAvatar: {
     position: "absolute",
     top: -60,
     width: 120,
     height: 120,
     borderRadius: 16,
     backgroundColor: "#F6F6F6",
+  },
+
+  iconAddAvatar: {
+    position: "absolute",
+    right: -12,
+    bottom: 20,
   },
 
   title: {
@@ -86,11 +96,6 @@ const styles = StyleSheet.create({
     fontStyle: "normal",
     fontWeight: "normal",
     color: "#1B4371",
-  },
-  iconAdd: {
-    position: "absolute",
-    right: -12,
-    bottom: 20,
   },
 });
 

@@ -14,11 +14,11 @@ const PostsScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.user}>
-        <Image style={styles.image} source={avatar} />
+      <View style={styles.userInformContainer}>
+        <Image style={styles.userPhoto} source={avatar} />
         <View>
-          <Text style={styles.login}>{data.login}</Text>
-          <Text style={styles.email}>{data.email}</Text>
+          <Text style={styles.userLogin}>{data.login}</Text>
+          <Text style={styles.userEmail}>{data.email}</Text>
         </View>
       </View>
       <Post />
@@ -34,28 +34,28 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 
-  user: {
+  userInformContainer: {
     flexDirection: "row",
     alignItems: "center",
     columnGap: 8,
     marginBottom: 32,
   },
 
-  image: {
+  userPhoto: {
     width: 60,
     height: 60,
     borderRadius: 16,
     backgroundColor: "#F6F6F6",
   },
 
-  login: {
+  userLogin: {
     fontFamily: "Roboto",
     fontSize: 13,
     fontWeight: "bold",
     color: "#212121",
   },
 
-  email: {
+  userEmail: {
     fontFamily: "Roboto",
     fontSize: 11,
     fontWeight: "normal",

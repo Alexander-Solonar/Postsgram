@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Pressable } from "react-native";
 import { AntDesign, Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 
@@ -33,6 +33,14 @@ const ButtonArrowLeft = () => {
   );
 };
 
+const ButtonSendComment = () => {
+  return (
+    <Pressable style={styles.btnSendComment}>
+      <AntDesign name="arrowup" size={24} color="#fff" />
+    </Pressable>
+  );
+};
+
 const styles = StyleSheet.create({
   btnUpload: {
     marginRight: 16,
@@ -42,6 +50,19 @@ const styles = StyleSheet.create({
   btnArrowLeft: {
     marginLeft: 16,
   },
+
+  btnSendComment: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    top: 8,
+    right: 10,
+    height: 34,
+    width: 34,
+    borderRadius: 17,
+    backgroundColor: "#FF6C00",
+  },
 });
 
-export { ButtonUpload, ButtonArrowLeft };
+export { ButtonUpload, ButtonArrowLeft, ButtonSendComment };

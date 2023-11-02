@@ -9,6 +9,7 @@ import LoginScreen from "./src/screens/loginScreen";
 import Home from "./src/screens/home";
 import PostsScreen from "./src/screens/postsScreen";
 import ProfileScreen from "./src/screens/profileScreen";
+import CommentsScreen from "./src/screens/commentsScreen";
 
 const MainStack = createStackNavigator();
 
@@ -49,6 +50,21 @@ export default () => {
           name="PostsScreen"
           component={PostsScreen}
           options={{ headerShown: false }}
+        />
+        <MainStack.Screen
+          name="CommentsScreen"
+          component={CommentsScreen}
+          options={{
+            title: "Коментарі",
+            headerTitleAlign: "center",
+            headerTitleStyle: {
+              fontSize: 17,
+              fontWeight: "bold",
+            },
+            headerStyle: {
+              borderBottomWidth: 1,
+            },
+          }}
         />
       </MainStack.Navigator>
     </NavigationContainer>

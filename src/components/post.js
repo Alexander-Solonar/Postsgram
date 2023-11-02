@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import post from "../assets/images/post.jpg";
+import { useNavigation } from "@react-navigation/native";
 
 const COURSES = [
   {
@@ -32,6 +33,7 @@ const COURSES = [
 
 const Post = ({ like }) => {
   const [courses, setCourses] = useState(COURSES);
+  const navigation = useNavigation();
   const screenWidth = Dimensions.get("window").width;
   const scale = 0.91;
   const imageWidth = screenWidth * scale;
@@ -55,7 +57,12 @@ const Post = ({ like }) => {
             <Text style={styles.title}>{item.title}</Text>
             <View style={styles.informationBlock}>
               <View style={styles.block}>
-                <Feather name="message-circle" size={24} color="#BDBDBD" />
+                <Feather
+                  name="message-circle"
+                  size={24}
+                  color="#BDBDBD"
+                  onPress={() => navigation.navigate("CommentsScreen")}
+                />
                 <Text style={styles.counter}>0</Text>
                 {like && <Feather name="thumbs-up" size={24} color="#BDBDBD" />}
                 {like && <Text style={styles.counter}>0</Text>}

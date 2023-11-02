@@ -7,29 +7,26 @@ import {
   Pressable,
   KeyboardAvoidingView,
 } from "react-native";
-import { Ionicons, Feather } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
+import PhotoPost from "../components/photoPost";
 
 const CreatePostsScreen = () => {
   return (
     <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
       <Pressable onPress={Keyboard.dismiss} style={{ flex: 1 }}>
         <View style={styles.container}>
-          <View style={styles.image}>
-            <View style={styles.camera}>
-              <Ionicons name="camera" size={24} color="#BDBDBD" />
-            </View>
-          </View>
+          <PhotoPost />
           <Text style={styles.text}>Завантажте фото</Text>
 
           <View style={styles.form}>
-            <View style={styles.boxInput}>
+            <View style={styles.inputContainer}>
               <TextInput
                 style={styles.input}
                 placeholder="Назва..."
                 placeholderTextColor="#BDBDBD"
               />
             </View>
-            <View style={styles.boxInput}>
+            <View style={styles.inputContainer}>
               <Feather name="map-pin" size={24} color="#BDBDBD" />
               <TextInput
                 style={styles.input}
@@ -38,11 +35,11 @@ const CreatePostsScreen = () => {
               />
             </View>
           </View>
-          <View style={styles.blockBtn}>
+          <View style={styles.btnContainer}>
             <Pressable style={styles.button}>
-              <Text style={styles.textBtn}>Опубліковати</Text>
+              <Text style={styles.btnText}>Опубліковати</Text>
             </Pressable>
-            <View style={styles.btnDelete}>
+            <View style={styles.btnIconDelete}>
               <Feather name="trash-2" size={24} color="#BDBDBD" />
             </View>
           </View>
@@ -60,29 +57,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: "#fff",
   },
-  image: {
-    position: "relative",
-    width: "100%",
-    height: 240,
-    marginBottom: 8,
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: "#E8E8E8",
-    backgroundColor: "#F6F6F6",
-  },
-  camera: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    justifyContent: "center",
-    alignItems: "center",
-    width: 60,
-    height: 60,
-    transform: [{ translateX: -30 }, { translateY: -30 }],
-    borderRadius: 60,
-    backgroundColor: "#fff",
-  },
   text: {
+    marginTop: 8,
     marginBottom: 32,
     fontFamily: "Roboto",
     fontSize: 16,
@@ -95,7 +71,7 @@ const styles = StyleSheet.create({
     rowGap: 16,
   },
 
-  boxInput: {
+  inputContainer: {
     width: "100%",
     flexDirection: "row",
     alignItems: "center",
@@ -111,6 +87,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#212121",
   },
+
+  btnContainer: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center",
+    rowGap: 15,
+  },
+
   button: {
     width: "100%",
     padding: 16,
@@ -118,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
   },
 
-  textBtn: {
+  btnText: {
     textAlign: "center",
     fontFamily: "Roboto",
     fontSize: 16,
@@ -127,20 +111,13 @@ const styles = StyleSheet.create({
     color: "#BDBDBD",
   },
 
-  btnDelete: {
+  btnIconDelete: {
     alignItems: "center",
     justifyContent: "center",
     width: 70,
     height: 40,
     borderRadius: 40,
     backgroundColor: "#F6F6F6",
-  },
-
-  blockBtn: {
-    flex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
-    rowGap: 15,
   },
 });
 

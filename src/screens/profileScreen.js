@@ -2,8 +2,8 @@ import { ImageBackground, StyleSheet, View, Text, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Post from "../components/post";
 import image from "../assets/images/photo.jpg";
-import { ButtonUpload } from "../components/iconButtons";
-import iconAdd from "../assets/images/iconAdd.png";
+import { ButtonUpload } from "../components/buttonIcons";
+import iconDelete from "../assets/images/iconDelete.png";
 
 const ProfileScreen = () => {
   const data = {
@@ -13,10 +13,14 @@ const ProfileScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+    <ImageBackground
+      source={image}
+      resizeMode="cover"
+      style={styles.imageBackground}
+    >
       <View style={styles.container}>
-        <View style={styles.avatar}>
-          <Image style={styles.iconAdd} source={iconAdd} />
+        <View style={styles.userAvatar}>
+          <Image style={styles.iconDeleteAvatar} source={iconDelete} />
         </View>
         <View style={styles.btnOut}>
           <ButtonUpload />
@@ -29,24 +33,24 @@ const ProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  image: {
+  imageBackground: {
     flex: 1,
     justifyContent: "flex-end",
     marginBottom: -80,
     paddingTop: 120,
   },
+
   container: {
     flex: 1,
     paddingTop: 22,
     paddingHorizontal: 16,
-
     alignItems: "center",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: "#fff",
   },
 
-  avatar: {
+  userAvatar: {
     position: "absolute",
     top: -60,
     width: 120,
@@ -54,7 +58,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: "#F6F6F6",
   },
-  iconAdd: {
+
+  iconDeleteAvatar: {
     position: "absolute",
     right: -12,
     bottom: 20,
