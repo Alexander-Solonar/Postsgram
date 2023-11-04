@@ -1,12 +1,12 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 
-const Comment = ({ message, isMyMessage }) => {
-  const containerStyle = isMyMessage
+const Comment = ({ comment }) => {
+  const containerStyle = comment.isMyMessage
     ? styles.myMessageContainer
     : styles.otherMessageContainer;
 
-  const dateStyle = isMyMessage
+  const dateStyle = comment.isMyMessage
     ? styles.myMessageDate
     : styles.otherMessageDate;
 
@@ -17,9 +17,11 @@ const Comment = ({ message, isMyMessage }) => {
         source={require("../assets/images/user.jpg")}
       />
       <View style={styles.textContainer}>
-        <Text style={{ fontSize: 13 }}>{message}</Text>
+        <Text style={{ fontSize: 13 }}>{comment.text}</Text>
         <View>
-          <Text style={dateStyle}>09 червня, 2020 | 08:40</Text>
+          <Text style={dateStyle}>
+            {comment.data ? comment.data : "20 березня 2022 р. 15:10"}
+          </Text>
         </View>
       </View>
     </View>

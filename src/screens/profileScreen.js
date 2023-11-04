@@ -2,6 +2,7 @@ import { ImageBackground, StyleSheet, View, Text, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Post from "../components/post";
 import image from "../assets/images/photo.jpg";
+import avatar from "../assets/images/user.jpg";
 import { ButtonUpload } from "../components/buttonIcons";
 import iconDelete from "../assets/images/iconDelete.png";
 
@@ -19,7 +20,8 @@ const ProfileScreen = () => {
       style={styles.imageBackground}
     >
       <View style={styles.container}>
-        <View style={styles.userAvatar}>
+        <View style={styles.userAvatarContainer}>
+          <Image style={styles.userPhoto} source={avatar} />
           <Image style={styles.iconDeleteAvatar} source={iconDelete} />
         </View>
         <View style={styles.btnOut}>
@@ -50,13 +52,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
 
-  userAvatar: {
+  userAvatarContainer: {
     position: "absolute",
     top: -60,
+  },
+
+  userPhoto: {
     width: 120,
     height: 120,
     borderRadius: 16,
-    backgroundColor: "#F6F6F6",
   },
 
   iconDeleteAvatar: {

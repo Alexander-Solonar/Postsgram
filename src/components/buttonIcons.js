@@ -33,9 +33,9 @@ const ButtonArrowLeft = () => {
   );
 };
 
-const ButtonSendComment = () => {
+const ButtonSendComment = ({ addComment }) => {
   return (
-    <Pressable style={styles.btnSendComment}>
+    <Pressable style={styles.btnSendComment} onPress={() => addComment()}>
       <AntDesign name="arrowup" size={24} color="#fff" />
     </Pressable>
   );

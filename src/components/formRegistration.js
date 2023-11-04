@@ -19,7 +19,10 @@ const FormRegistration = () => {
       email,
       password,
     };
-    navigation.navigate("Home", { screen: "ProfileScreen", params: data });
+    navigation.navigate("Home", {
+      screen: "Публікації",
+      params: data,
+    });
 
     setLogin("");
     setEmail("");

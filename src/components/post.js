@@ -11,6 +11,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import post from "../assets/images/post.jpg";
 import { useNavigation } from "@react-navigation/native";
+import { Pressable } from "react-native";
 
 const COURSES = [
   {
@@ -67,10 +68,13 @@ const Post = ({ like }) => {
                 {like && <Feather name="thumbs-up" size={24} color="#BDBDBD" />}
                 {like && <Text style={styles.counter}>0</Text>}
               </View>
-              <View style={styles.block}>
+              <Pressable
+                style={styles.block}
+                onPress={() => navigation.navigate("MapScreen")}
+              >
                 <Feather name="map-pin" size={24} color="#BDBDBD" />
                 <Text style={styles.location}>Ukraine</Text>
-              </View>
+              </Pressable>
             </View>
           </View>
         )}

@@ -4,6 +4,7 @@ import PostsScreen from "./postsScreen";
 import CreatePostsScreen from "./createPostsScreen";
 import { ButtonArrowLeft, ButtonUpload } from "../components/buttonIcons";
 import ProfileScreen from "./profileScreen";
+import { useRoute } from "@react-navigation/native";
 
 const Tabs = createBottomTabNavigator();
 const createIconComponent = (IconComponent, name, focused) => (
@@ -41,7 +42,6 @@ const tabBarItemStyle = {
 const Home = () => {
   return (
     <Tabs.Navigator
-      initialRouteName="ProfileScreen"
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
           if (route.name === "Публікації") {

@@ -9,6 +9,7 @@ import {
 import Comment from "../components/comment";
 import { ButtonSendComment } from "../components/buttonIcons";
 import PhotoPost from "../components/photoPost";
+import { useState } from "react";
 
 const messages = [
   {
@@ -24,27 +25,61 @@ const messages = [
   { id: "3", text: "Thank you! That was very helpful!", isMyMessage: false },
   {
     id: "4",
-    text: "A fast 50mm like f1.8 would help with the bokeh. I’ve been using primes as they tend to get a bit sharper images.",
+    text: "I’ve been using primes as they tend to get a bit sharper images.",
     isMyMessage: true,
   },
 ];
 
 const CommentsScreen = () => {
+  const [comments, setComments] = useState(messages);
+  const [comment, setComment] = useState("");
+
+  const date = new Date();
+
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+
+  const formattedDate = date.toLocaleDateString("uk-UA", options);
+  const formattedDateTime =
+    formattedDate.replace(/р\.$/, "") +
+    " | " +
+    date.toLocaleTimeString("uk-UA", { hour: "2-digit", minute: "2-digit" });
+
+  const addComment = () => {
+    if (comment.trim()) {
+      const newComment = {
+        id: Math.random(),
+        text: comment,
+        isMyMessage: true,
+        data: formattedDateTime,
+      };
+      setComments([...comments, newComment]);
+    }
+
+    setComment("");
+  };
+
   return (
     <Pressable onPress={Keyboard.dismiss} style={{ flex: 1 }}>
       <View style={styles.container}>
         <FlatList
-          data={messages}
+          data={comments}
           keyExtractor={(item) => item.id}
           ListHeaderComponent={<PhotoPost />}
           ListHeaderComponentStyle={{ marginBottom: 32 }}
-          renderItem={({ item }) => (
-            <Comment message={item.text} isMyMessage={item.isMyMessage} />
-          )}
+          renderItem={({ item }) => <Comment comment={item} />}
         />
         <View style={styles.inputContainer}>
-          <TextInput style={styles.input} placeholder="Коментувати..." />
-          <ButtonSendComment />
+          <TextInput
+            value={comment}
+            onChangeText={setComment}
+            style={styles.input}
+            placeholder="Коментувати..."
+          />
+          <ButtonSendComment addComment={addComment} />
         </View>
       </View>
     </Pressable>

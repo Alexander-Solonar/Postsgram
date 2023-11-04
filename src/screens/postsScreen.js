@@ -1,24 +1,20 @@
 import { StyleSheet, View, Text, Image } from "react-native";
 import Post from "../components/post";
 import avatar from "../assets/images/user.jpg";
+import { useRoute } from "@react-navigation/native";
 
 const PostsScreen = () => {
-  // const {
-  //   params: { login, email },
-  // } = useRoute();
-
-  const data = {
-    login: "Natali Romanova",
-    email: "email@example.com",
-  };
+  const {
+    params: { login, email },
+  } = useRoute();
 
   return (
     <View style={styles.container}>
       <View style={styles.userInformContainer}>
         <Image style={styles.userPhoto} source={avatar} />
         <View>
-          <Text style={styles.userLogin}>{data.login}</Text>
-          <Text style={styles.userEmail}>{data.email}</Text>
+          <Text style={styles.userLogin}>{login}</Text>
+          <Text style={styles.userEmail}>{email}</Text>
         </View>
       </View>
       <Post />
