@@ -1,24 +1,20 @@
-import { ImageBackground, StyleSheet, View, Text, Image } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import Post from "../components/post";
-import image from "../assets/images/photo.jpg";
-import avatar from "../assets/images/user.jpg";
-import { ButtonUpload } from "../components/buttonIcons";
-import iconDelete from "../assets/images/iconDelete.png";
+import { ImageBackground, StyleSheet, View, Text, Image } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import Post from '../components/post';
+import image from '../assets/images/photo.jpg';
+import avatar from '../assets/images/user.jpg';
+import { ButtonUpload } from '../components/buttonIcons';
+import iconDelete from '../assets/images/iconDelete.png';
 
 const ProfileScreen = () => {
   const data = {
-    login: "Natali Romanova",
-    email: "email@example.com",
+    login: 'Natali Romanova',
+    email: 'email@example.com',
   };
   const navigation = useNavigation();
 
   return (
-    <ImageBackground
-      source={image}
-      resizeMode="cover"
-      style={styles.imageBackground}
-    >
+    <ImageBackground style={styles.imageBackground} source={image} resizeMode="cover">
       <View style={styles.container}>
         <View style={styles.userAvatarContainer}>
           <Image style={styles.userPhoto} source={avatar} />
@@ -37,7 +33,7 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   imageBackground: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     marginBottom: -80,
     paddingTop: 120,
   },
@@ -46,14 +42,14 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 22,
     paddingHorizontal: 16,
-    alignItems: "center",
+    alignItems: 'center',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
 
   userAvatarContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: -60,
   },
 
@@ -64,25 +60,25 @@ const styles = StyleSheet.create({
   },
 
   iconDeleteAvatar: {
-    position: "absolute",
+    position: 'absolute',
     right: -12,
     bottom: 20,
   },
 
   btnOut: {
-    marginLeft: "auto",
+    marginLeft: 'auto',
     marginBottom: 46,
   },
 
   title: {
     marginBottom: 33,
-    textAlign: "center",
-    fontFamily: "Roboto",
+    textAlign: 'center',
+    fontFamily: 'Roboto',
     fontSize: 30,
-    fontStyle: "normal",
-    fontWeight: "bold",
+    fontStyle: 'normal',
+    fontWeight: 'bold',
     letterSpacing: 0.3,
-    color: "#212121",
+    color: '#212121',
   },
 });
 

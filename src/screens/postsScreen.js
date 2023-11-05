@@ -1,7 +1,7 @@
-import { StyleSheet, View, Text, Image } from "react-native";
-import Post from "../components/post";
-import avatar from "../assets/images/user.jpg";
-import { useRoute } from "@react-navigation/native";
+import { StyleSheet, View, Text, Image } from 'react-native';
+import Post from '../components/post';
+import avatar from '../assets/images/user.jpg';
+import { useRoute } from '@react-navigation/native';
 
 const PostsScreen = () => {
   const {
@@ -27,12 +27,12 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 32,
     paddingHorizontal: 16,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
 
   userInformContainer: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     columnGap: 8,
     marginBottom: 32,
   },
@@ -41,21 +41,21 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 16,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: '#F6F6F6',
   },
 
   userLogin: {
-    fontFamily: "Roboto",
+    fontFamily: 'Roboto',
     fontSize: 13,
-    fontWeight: "bold",
-    color: "#212121",
+    fontWeight: 'bold',
+    color: '#212121',
   },
 
   userEmail: {
-    fontFamily: "Roboto",
+    fontFamily: 'Roboto',
     fontSize: 11,
-    fontWeight: "normal",
-    color: "#212121",
+    fontWeight: 'normal',
+    color: '#212121',
     opacity: 0.8,
   },
 });

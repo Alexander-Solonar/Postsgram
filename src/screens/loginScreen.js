@@ -6,25 +6,22 @@ import {
   KeyboardAvoidingView,
   Pressable,
   Keyboard,
-} from "react-native";
-import image from "../assets/images/photo.jpg";
-import { useNavigation } from "@react-navigation/native";
-import FormLogin from "../components/formLogin";
+} from 'react-native';
+import image from '../assets/images/photo.jpg';
+import { useNavigation } from '@react-navigation/native';
+import FormLogin from '../components/formLogin';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+    <ImageBackground style={styles.image} source={image} resizeMode="cover">
       <Pressable onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <Text style={styles.title}>Увійти</Text>
-          <KeyboardAvoidingView style={{ width: "100%" }} behavior="padding">
+          <KeyboardAvoidingView style={{ width: '100%' }} behavior="padding">
             <FormLogin />
-            <Text
-              style={styles.link}
-              onPress={() => navigation.navigate("Registration")}
-            >
+            <Text style={styles.link} onPress={() => navigation.navigate('Registration')}>
               Немає акаунту? Зареєструватися
             </Text>
           </KeyboardAvoidingView>
@@ -37,37 +34,37 @@ const LoginScreen = () => {
 const styles = StyleSheet.create({
   image: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
   },
 
   container: {
     paddingHorizontal: 16,
     paddingTop: 32,
-    alignItems: "center",
+    alignItems: 'center',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
 
   title: {
     marginBottom: 33,
-    textAlign: "center",
-    fontFamily: "Roboto",
+    textAlign: 'center',
+    fontFamily: 'Roboto',
     fontSize: 30,
-    fontStyle: "normal",
-    fontWeight: "bold",
+    fontStyle: 'normal',
+    fontWeight: 'bold',
     letterSpacing: 0.3,
-    color: "#212121",
+    color: '#212121',
   },
 
   link: {
     marginBottom: 144,
-    textAlign: "center",
-    fontFamily: "Roboto",
+    textAlign: 'center',
+    fontFamily: 'Roboto',
     fontSize: 16,
-    fontStyle: "normal",
-    fontWeight: "normal",
-    color: "#1B4371",
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    color: '#1B4371',
   },
 });
 

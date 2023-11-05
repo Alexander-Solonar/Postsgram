@@ -1,10 +1,10 @@
-import { StyleSheet, View, TextInput } from "react-native";
-import ButtonPrimary from "./buttonPrimary";
-import { useState } from "react";
+import { StyleSheet, View, TextInput } from 'react-native';
+import ButtonPrimary from './buttonPrimary';
+import { useState } from 'react';
 
 const FormLogin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const id = Math.floor(Math.random() * 100000);
 
@@ -14,11 +14,11 @@ const FormLogin = () => {
       email,
       password,
     };
-    setEmail("");
-    setPassword("");
+    setEmail('');
+    setPassword('');
   };
 
-  const handleFocus = (input) => {
+  const handleFocus = input => {
     setIsFocused(input);
   };
 
@@ -32,30 +32,30 @@ const FormLogin = () => {
         <TextInput
           style={{
             ...styles.input,
-            borderColor: isFocused === "email" ? "#FF6C00" : "#E8E8E8",
+            borderColor: isFocused === 'email' ? '#FF6C00' : '#E8E8E8',
           }}
           placeholder="Адреса електронної пошти"
           keyboardType="email-address"
           placeholderTextColor="#BDBDBD"
           value={email}
           onChangeText={setEmail}
-          onFocus={() => handleFocus("email")}
+          onFocus={() => handleFocus('email')}
           onBlur={handleBlur}
         />
         <TextInput
           style={{
             ...styles.input,
-            borderColor: isFocused === "password" ? "#FF6C00" : "#E8E8E8",
+            borderColor: isFocused === 'password' ? '#FF6C00' : '#E8E8E8',
           }}
           placeholder="Пароль"
           placeholderTextColor="#BDBDBD"
           value={password}
           onChangeText={setPassword}
-          onFocus={() => handleFocus("password")}
+          onFocus={() => handleFocus('password')}
           onBlur={handleBlur}
         />
       </View>
-      <ButtonPrimary text={"Увійти"} handleSubmit={handleSubmit} />
+      <ButtonPrimary text={'Увійти'} handleSubmit={handleSubmit} />
     </>
   );
 };
@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
   input: {
     paddingVertical: 11,
     paddingHorizontal: 16,
-    fontFamily: "Roboto",
+    fontFamily: 'Roboto',
     fontSize: 16,
     borderRadius: 10,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: '#F6F6F6',
     borderWidth: 1,
   },
 });

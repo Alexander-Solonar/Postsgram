@@ -7,21 +7,17 @@ import {
   Image,
   Pressable,
   Keyboard,
-} from "react-native";
-import image from "../assets/images/photo.jpg";
-import iconAdd from "../assets/images/iconAdd.png";
-import { useNavigation } from "@react-navigation/native";
-import FormRegistration from "../components/formRegistration";
+} from 'react-native';
+import image from '../assets/images/photo.jpg';
+import iconAdd from '../assets/images/iconAdd.png';
+import { useNavigation } from '@react-navigation/native';
+import FormRegistration from '../components/formRegistration';
 
 const RegistrationScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <ImageBackground
-      source={image}
-      resizeMode="cover"
-      style={styles.imageBackground}
-    >
+    <ImageBackground style={styles.imageBackground} source={image} resizeMode="cover">
       <Pressable onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.userAvatar}>
@@ -29,15 +25,12 @@ const RegistrationScreen = () => {
           </View>
           <Text style={styles.title}>Реєстрація</Text>
           <KeyboardAvoidingView
-            style={{ width: "100%" }}
+            style={{ width: '100%' }}
             behavior="padding"
             keyboardVerticalOffset={40}
           >
             <FormRegistration />
-            <Text
-              style={styles.link}
-              onPress={() => navigation.navigate("Login")}
-            >
+            <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
               Вже є акаунт? Увійти
             </Text>
           </KeyboardAvoidingView>
@@ -50,52 +43,52 @@ const RegistrationScreen = () => {
 const styles = StyleSheet.create({
   imageBackground: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
   },
   container: {
     paddingHorizontal: 16,
     paddingTop: 92,
 
-    alignItems: "center",
+    alignItems: 'center',
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
 
   userAvatar: {
-    position: "absolute",
+    position: 'absolute',
     top: -60,
     width: 120,
     height: 120,
     borderRadius: 16,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: '#F6F6F6',
   },
 
   iconAddAvatar: {
-    position: "absolute",
+    position: 'absolute',
     right: -12,
     bottom: 20,
   },
 
   title: {
     marginBottom: 33,
-    textAlign: "center",
-    fontFamily: "Roboto",
+    textAlign: 'center',
+    fontFamily: 'Roboto',
     fontSize: 30,
-    fontStyle: "normal",
-    fontWeight: "bold",
+    fontStyle: 'normal',
+    fontWeight: 'bold',
     letterSpacing: 0.3,
-    color: "#212121",
+    color: '#212121',
   },
 
   link: {
     marginBottom: 78,
-    textAlign: "center",
-    fontFamily: "Roboto",
+    textAlign: 'center',
+    fontFamily: 'Roboto',
     fontSize: 16,
-    fontStyle: "normal",
-    fontWeight: "normal",
-    color: "#1B4371",
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    color: '#1B4371',
   },
 });
 

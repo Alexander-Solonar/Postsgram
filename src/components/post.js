@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,54 +7,27 @@ import {
   SafeAreaView,
   FlatList,
   Dimensions,
-} from "react-native";
-import { Feather } from "@expo/vector-icons";
-import post from "../assets/images/post.jpg";
-import { useNavigation } from "@react-navigation/native";
-import { Pressable } from "react-native";
-
-const COURSES = [
-  {
-    id: "45k6-j54k-4jth",
-    title: "Ліс",
-  },
-  {
-    id: "4116-jfk5-43rh",
-    title: "Ліс",
-  },
-  {
-    id: "4d16-5tt5-4j55",
-    title: "Ліс",
-  },
-  {
-    id: "LG16-ant5-0J25",
-    title: "Ліс",
-  },
-];
+  Pressable,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { Context } from '../context/Context';
+import { Feather } from '@expo/vector-icons';
 
 const Post = ({ like }) => {
-  const [courses, setCourses] = useState(COURSES);
+  const { posts } = useContext(Context);
   const navigation = useNavigation();
-  const screenWidth = Dimensions.get("window").width;
+  const screenWidth = Dimensions.get('window').width;
   const scale = 0.91;
   const imageWidth = screenWidth * scale;
 
   return (
     <SafeAreaView style={styles.post}>
       <FlatList
-        data={courses}
-        keyExtractor={(item) => item.id}
+        data={posts}
+        keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View style={{ marginBottom: 32 }}>
-            <Image
-              source={post}
-              style={{
-                width: imageWidth,
-                height: 240,
-                borderRadius: 8,
-              }}
-            />
-
+            <Image style={{ ...styles.image, width: imageWidth }} source={item.image} />
             <Text style={styles.title}>{item.title}</Text>
             <View style={styles.informationBlock}>
               <View style={styles.block}>
@@ -62,16 +35,13 @@ const Post = ({ like }) => {
                   name="message-circle"
                   size={24}
                   color="#BDBDBD"
-                  onPress={() => navigation.navigate("CommentsScreen")}
+                  onPress={() => navigation.navigate('CommentsScreen')}
                 />
                 <Text style={styles.counter}>0</Text>
                 {like && <Feather name="thumbs-up" size={24} color="#BDBDBD" />}
                 {like && <Text style={styles.counter}>0</Text>}
               </View>
-              <Pressable
-                style={styles.block}
-                onPress={() => navigation.navigate("MapScreen")}
-              >
+              <Pressable style={styles.block} onPress={() => navigation.navigate('MapScreen')}>
                 <Feather name="map-pin" size={24} color="#BDBDBD" />
                 <Text style={styles.location}>Ukraine</Text>
               </Pressable>
@@ -86,41 +56,46 @@ const Post = ({ like }) => {
 const styles = StyleSheet.create({
   post: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
   },
+  image: {
+    height: 240,
+    borderRadius: 8,
+  },
+
   title: {
     marginTop: 8,
-    fontFamily: "Roboto",
+    fontFamily: 'Roboto',
     fontSize: 16,
-    fontWeight: "bold",
-    color: "#212121",
+    fontWeight: 'bold',
+    color: '#212121',
   },
 
   informationBlock: {
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 8,
   },
 
   block: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     columnGap: 6,
   },
 
   counter: {
     marginRight: 24,
     fontSize: 16,
-    color: "#BDBDBD",
+    color: '#BDBDBD',
   },
 
   location: {
-    fontFamily: "Roboto",
+    fontFamily: 'Roboto',
     fontSize: 16,
-    textDecorationLine: "underline",
-    color: "#212121",
+    textDecorationLine: 'underline',
+    color: '#212121',
   },
 });
 

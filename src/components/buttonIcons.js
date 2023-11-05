@@ -1,7 +1,7 @@
-import React from "react";
-import { StyleSheet, Pressable } from "react-native";
-import { AntDesign, Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import React from 'react';
+import { StyleSheet, Pressable } from 'react-native';
+import { AntDesign, Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 const ButtonUpload = () => {
   const navigation = useNavigation();
@@ -44,7 +44,7 @@ const ButtonSendComment = ({ addComment }) => {
 const styles = StyleSheet.create({
   btnUpload: {
     marginRight: 16,
-    transform: [{ rotate: "90deg" }],
+    transform: [{ rotate: '90deg' }],
   },
 
   btnArrowLeft: {
@@ -52,16 +52,16 @@ const styles = StyleSheet.create({
   },
 
   btnSendComment: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
     top: 8,
     right: 10,
     height: 34,
     width: 34,
     borderRadius: 17,
-    backgroundColor: "#FF6C00",
+    backgroundColor: '#FF6C00',
   },
 });
 

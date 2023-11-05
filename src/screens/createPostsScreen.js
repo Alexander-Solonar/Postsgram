@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,44 +7,98 @@ import {
   TextInput,
   Pressable,
   KeyboardAvoidingView,
-} from "react-native";
-import { Feather } from "@expo/vector-icons";
-import PhotoPost from "../components/photoPost";
+} from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import PhotoPost from '../components/photoPost';
+import { Context } from '../context/Context';
+import { Formik } from 'formik';
+import ButtonPrimary from '../components/buttonPrimary';
 
 const CreatePostsScreen = () => {
-  return (
-    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-      <Pressable onPress={Keyboard.dismiss} style={{ flex: 1 }}>
-        <View style={styles.container}>
-          <PhotoPost />
-          <Text style={styles.text}>Завантажте фото</Text>
+  const { photoUrl, setPhotoUrl } = useContext(Context);
+  const [isFilledInput, setIsFilledInput] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
 
-          <View style={styles.form}>
-            <View style={styles.inputContainer}>
-              <TextInput
-                style={styles.input}
-                placeholder="Назва..."
-                placeholderTextColor="#BDBDBD"
-              />
+  useEffect(() => {
+    setIsDisabled(!(!!photoUrl && !!isFilledInput));
+  }, [isFilledInput, photoUrl]);
+
+  const initialValues = {
+    name: '',
+    place: '',
+    isFocused: '',
+  };
+
+  const handleFormSubmit = (values, { resetForm }) => {
+    console.log({ ...values, photoUrl });
+    resetForm();
+    setPhotoUrl('');
+  };
+
+  const updateIsDisabled = (name, place) => {
+    setIsFilledInput(!!name.trim() && !!place.trim());
+  };
+
+  const styleInputContainer = (focus, name) => {
+    return {
+      ...styles.inputContainer,
+      borderBottomColor: focus === name ? 'green' : '#E8E8E8',
+    };
+  };
+
+  return (
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={20}>
+      <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
+        <Formik style={{ flex: 1 }} initialValues={initialValues} onSubmit={handleFormSubmit}>
+          {({ handleChange, handleSubmit, values }) => (
+            <View style={styles.container}>
+              <PhotoPost />
+              <Text style={styles.text}>{photoUrl ? 'Редагувати фото' : 'Завантажте фото'}</Text>
+              <View style={styles.form}>
+                <View style={styleInputContainer(values.isFocused, 'name')}>
+                  <TextInput
+                    style={styles.input}
+                    value={values.name}
+                    placeholder="Назва..."
+                    placeholderTextColor="#BDBDBD"
+                    onFocus={() => handleChange('isFocused')('name')}
+                    onBlur={() => handleChange('isFocused')('')}
+                    onChangeText={text => {
+                      handleChange('name')(text);
+                      updateIsDisabled(text, values.place);
+                    }}
+                  />
+                </View>
+                <View style={styleInputContainer(values.isFocused, 'place')}>
+                  <Feather name="map-pin" size={24} color="#BDBDBD" />
+                  <TextInput
+                    style={styles.input}
+                    value={values.place}
+                    placeholder="Місцевість..."
+                    placeholderTextColor="#BDBDBD"
+                    onFocus={() => handleChange('isFocused')('place')}
+                    onBlur={() => handleChange('isFocused')('')}
+                    onChangeText={text => {
+                      handleChange('place')(text);
+                      updateIsDisabled(values.name, text);
+                    }}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.btnContainer}>
+                <ButtonPrimary
+                  text="Опубліковати"
+                  isDisabled={isDisabled}
+                  handleSubmit={handleSubmit}
+                />
+                <View style={styles.btnIconDelete}>
+                  <Feather name="trash-2" size={24} color="#BDBDBD" />
+                </View>
+              </View>
             </View>
-            <View style={styles.inputContainer}>
-              <Feather name="map-pin" size={24} color="#BDBDBD" />
-              <TextInput
-                style={styles.input}
-                placeholder="Місцевість..."
-                placeholderTextColor="#BDBDBD"
-              />
-            </View>
-          </View>
-          <View style={styles.btnContainer}>
-            <Pressable style={styles.button}>
-              <Text style={styles.btnText}>Опубліковати</Text>
-            </Pressable>
-            <View style={styles.btnIconDelete}>
-              <Feather name="trash-2" size={24} color="#BDBDBD" />
-            </View>
-          </View>
-        </View>
+          )}
+        </Formik>
       </Pressable>
     </KeyboardAvoidingView>
   );
@@ -52,18 +107,18 @@ const CreatePostsScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     paddingVertical: 32,
     paddingHorizontal: 16,
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
   },
   text: {
     marginTop: 8,
     marginBottom: 32,
-    fontFamily: "Roboto",
+    fontFamily: 'Roboto',
     fontSize: 16,
-    fontWeight: "normal",
-    color: "#BDBDBD",
+    fontWeight: 'normal',
+    color: '#BDBDBD',
   },
 
   form: {
@@ -72,52 +127,35 @@ const styles = StyleSheet.create({
   },
 
   inputContainer: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
     columnGap: 3,
     borderBottomWidth: 1,
-    borderBottomColor: "#E8E8E8",
   },
 
   input: {
     flexGrow: 1,
-    height: 50,
-    fontFamily: "Roboto",
+    paddingVertical: 11,
+    fontFamily: 'Roboto',
     fontSize: 16,
-    color: "#212121",
+    color: '#212121',
   },
 
   btnContainer: {
     flex: 1,
-    justifyContent: "space-between",
-    alignItems: "center",
+    justifyContent: 'space-between',
+    alignItems: 'center',
     rowGap: 15,
   },
 
-  button: {
-    width: "100%",
-    padding: 16,
-    borderRadius: 100,
-    backgroundColor: "#F6F6F6",
-  },
-
-  btnText: {
-    textAlign: "center",
-    fontFamily: "Roboto",
-    fontSize: 16,
-    fontStyle: "normal",
-    fontWeight: "normal",
-    color: "#BDBDBD",
-  },
-
   btnIconDelete: {
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 70,
     height: 40,
     borderRadius: 40,
-    backgroundColor: "#F6F6F6",
+    backgroundColor: '#F6F6F6',
   },
 });
 
