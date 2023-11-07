@@ -8,43 +8,61 @@ import {
   Pressable,
   KeyboardAvoidingView,
 } from 'react-native';
+import { Formik } from 'formik';
 import { Feather } from '@expo/vector-icons';
 import PhotoPost from '../components/photoPost';
 import { Context } from '../context/Context';
-import { Formik } from 'formik';
 import ButtonPrimary from '../components/buttonPrimary';
+import { DeleteButton } from '../components/buttonIcons';
+import * as Location from 'expo-location';
+import { useNavigation } from '@react-navigation/native';
 
 const CreatePostsScreen = () => {
   const { photoUrl, setPhotoUrl } = useContext(Context);
-  const [isFilledInput, setIsFilledInput] = useState(false);
-  const [isDisabled, setIsDisabled] = useState(true);
-
-  useEffect(() => {
-    setIsDisabled(!(!!photoUrl && !!isFilledInput));
-  }, [isFilledInput, photoUrl]);
+  const { posts, setPosts } = useContext(Context);
+  const [location, setLocation] = useState(null);
+  const [isFocused, setIsFocused] = useState('');
+  const navigation = useNavigation();
 
   const initialValues = {
-    name: '',
+    title: '',
     place: '',
-    isFocused: '',
   };
 
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        console.log('Permission to access location was denied');
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      setLocation(coords);
+    })();
+  }, []);
+
   const handleFormSubmit = (values, { resetForm }) => {
-    console.log({ ...values, photoUrl });
+    setPosts([...posts, { ...values, photoUrl, location, id: Math.random() }]);
+
+    navigation.goBack();
     resetForm();
     setPhotoUrl('');
   };
 
-  const updateIsDisabled = (name, place) => {
-    setIsFilledInput(!!name.trim() && !!place.trim());
+  const handleDelete = handleChange => {
+    setPhotoUrl('');
+    handleChange('title')('');
+    handleChange('place')('');
   };
 
-  const styleInputContainer = (focus, name) => {
-    return {
-      ...styles.inputContainer,
-      borderBottomColor: focus === name ? 'green' : '#E8E8E8',
-    };
-  };
+  const styleInputContainer = title => ({
+    ...styles.inputContainer,
+    borderBottomColor: isFocused === title ? 'green' : '#E8E8E8',
+  });
 
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={20}>
@@ -55,33 +73,27 @@ const CreatePostsScreen = () => {
               <PhotoPost />
               <Text style={styles.text}>{photoUrl ? 'Редагувати фото' : 'Завантажте фото'}</Text>
               <View style={styles.form}>
-                <View style={styleInputContainer(values.isFocused, 'name')}>
+                <View style={styleInputContainer('title')}>
                   <TextInput
                     style={styles.input}
-                    value={values.name}
+                    value={values.title}
                     placeholder="Назва..."
                     placeholderTextColor="#BDBDBD"
-                    onFocus={() => handleChange('isFocused')('name')}
-                    onBlur={() => handleChange('isFocused')('')}
-                    onChangeText={text => {
-                      handleChange('name')(text);
-                      updateIsDisabled(text, values.place);
-                    }}
+                    onFocus={() => setIsFocused('title')}
+                    onBlur={() => setIsFocused('')}
+                    onChangeText={handleChange('title')}
                   />
                 </View>
-                <View style={styleInputContainer(values.isFocused, 'place')}>
+                <View style={styleInputContainer('place')}>
                   <Feather name="map-pin" size={24} color="#BDBDBD" />
                   <TextInput
                     style={styles.input}
                     value={values.place}
                     placeholder="Місцевість..."
                     placeholderTextColor="#BDBDBD"
-                    onFocus={() => handleChange('isFocused')('place')}
-                    onBlur={() => handleChange('isFocused')('')}
-                    onChangeText={text => {
-                      handleChange('place')(text);
-                      updateIsDisabled(values.name, text);
-                    }}
+                    onFocus={() => setIsFocused('place')}
+                    onBlur={() => setIsFocused('')}
+                    onChangeText={handleChange('place')}
                   />
                 </View>
               </View>
@@ -89,12 +101,13 @@ const CreatePostsScreen = () => {
               <View style={styles.btnContainer}>
                 <ButtonPrimary
                   text="Опубліковати"
-                  isDisabled={isDisabled}
+                  isDisabled={!(!!photoUrl && !!values.place && !!values.title)}
                   handleSubmit={handleSubmit}
                 />
-                <View style={styles.btnIconDelete}>
-                  <Feather name="trash-2" size={24} color="#BDBDBD" />
-                </View>
+                <DeleteButton
+                  isDisabled={!(!!photoUrl && !!values.place && !!values.title)}
+                  handleDelete={() => handleDelete(handleChange)}
+                />
               </View>
             </View>
           )}
@@ -147,15 +160,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     rowGap: 15,
-  },
-
-  btnIconDelete: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 70,
-    height: 40,
-    borderRadius: 40,
-    backgroundColor: '#F6F6F6',
   },
 });
 

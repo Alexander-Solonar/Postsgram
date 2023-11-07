@@ -27,7 +27,7 @@ const Post = ({ like }) => {
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View style={{ marginBottom: 32 }}>
-            <Image style={{ ...styles.image, width: imageWidth }} source={item.image} />
+            <Image style={{ ...styles.image, width: imageWidth }} source={{ uri: item.photoUrl }} />
             <Text style={styles.title}>{item.title}</Text>
             <View style={styles.informationBlock}>
               <View style={styles.block}>
@@ -41,9 +41,18 @@ const Post = ({ like }) => {
                 {like && <Feather name="thumbs-up" size={24} color="#BDBDBD" />}
                 {like && <Text style={styles.counter}>0</Text>}
               </View>
-              <Pressable style={styles.block} onPress={() => navigation.navigate('MapScreen')}>
+              <Pressable
+                style={styles.block}
+                onPress={() =>
+                  navigation.navigate('MapScreen', {
+                    location: item.location,
+                    title: item.title,
+                    place: item.place,
+                  })
+                }
+              >
                 <Feather name="map-pin" size={24} color="#BDBDBD" />
-                <Text style={styles.location}>Ukraine</Text>
+                <Text style={styles.location}>{item.place}</Text>
               </Pressable>
             </View>
           </View>

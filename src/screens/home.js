@@ -68,7 +68,6 @@ const Home = () => {
         options={{
           ...styleHeader,
           headerLeft: () => <ButtonArrowLeft />,
-
           tabBarStyle: { display: 'none' },
         }}
       />

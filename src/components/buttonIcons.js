@@ -41,6 +41,20 @@ const ButtonSendComment = ({ addComment }) => {
   );
 };
 
+const DeleteButton = ({ handleDelete, isDisabled = true }) => {
+  const btnDeleteStyle = {
+    ...styles.btnDelete,
+    backgroundColor: isDisabled ? '#F6F6F6' : '#FF6C00',
+  };
+  const deleteIconColor = isDisabled ? '#BDBDBD' : '#fff';
+
+  return (
+    <Pressable style={btnDeleteStyle} disabled={isDisabled} onPress={handleDelete}>
+      <Feather name="trash-2" size={24} color={deleteIconColor} />
+    </Pressable>
+  );
+};
+
 const styles = StyleSheet.create({
   btnUpload: {
     marginRight: 16,
@@ -63,6 +77,14 @@ const styles = StyleSheet.create({
     borderRadius: 17,
     backgroundColor: '#FF6C00',
   },
+
+  btnDelete: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 70,
+    height: 40,
+    borderRadius: 40,
+  },
 });
 
-export { ButtonUpload, ButtonArrowLeft, ButtonSendComment };
+export { ButtonUpload, ButtonArrowLeft, ButtonSendComment, DeleteButton };

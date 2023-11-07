@@ -1,16 +1,11 @@
 import { StyleSheet, Pressable, Text } from 'react-native';
 
 const ButtonPrimary = ({ text, handleSubmit, isDisabled = false }) => {
-  const buttonStyle = isDisabled
-    ? { ...styles.button, backgroundColor: '#F6F6F6' }
-    : { ...styles.button, backgroundColor: '#FF6C00' };
-
-  const textButtonStyle = isDisabled
-    ? { ...styles.textBtn, color: '#BDBDBD' }
-    : { ...styles.textBtn, color: '#fff' };
+  const buttonStyle = { ...styles.button, backgroundColor: isDisabled ? '#F6F6F6' : '#FF6C00' };
+  const textButtonStyle = { ...styles.textBtn, color: isDisabled ? '#BDBDBD' : '#fff' };
 
   return (
-    <Pressable style={buttonStyle} disabled={isDisabled} onPress={isDisabled ? null : handleSubmit}>
+    <Pressable style={buttonStyle} disabled={isDisabled} onPress={handleSubmit}>
       <Text style={textButtonStyle}>{text}</Text>
     </Pressable>
   );
