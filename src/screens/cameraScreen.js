@@ -1,17 +1,18 @@
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { Context } from '../context/Context';
+import { useDispatch } from 'react-redux';
+import { setPhotoUrl } from '../redux/photoUrlSlice';
 
 const CameraScreen = () => {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraRef, setCameraRef] = useState(null);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const navigation = useNavigation();
-  const { setPhotoUrl } = useContext(Context);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     (async () => {
@@ -22,12 +23,23 @@ const CameraScreen = () => {
     })();
   }, []);
 
-  if (hasPermission === null) {
-    return <View />;
-  }
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
+
+  const handlePress = async () => {
+    if (cameraRef) {
+      const { uri } = await cameraRef.takePictureAsync();
+      dispatch(setPhotoUrl(uri));
+      navigation.goBack();
+    }
+  };
+
+  const handleSetTypeCamera = () => {
+    setType(
+      type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -35,31 +47,12 @@ const CameraScreen = () => {
         <View style={styles.photoView}>
           <View style={styles.controlContainer}>
             <View style={{ width: 34 }}></View>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={async () => {
-                if (cameraRef) {
-                  const { uri } = await cameraRef.takePictureAsync();
-                  setPhotoUrl(uri);
-                  navigation.goBack();
-                }
-              }}
-            >
+            <TouchableOpacity style={styles.button} onPress={handlePress}>
               <View style={styles.takePhotoOut}>
                 <View style={styles.takePhotoInner}></View>
               </View>
             </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.flipContainer}
-              onPress={() => {
-                setType(
-                  type === Camera.Constants.Type.back
-                    ? Camera.Constants.Type.front
-                    : Camera.Constants.Type.back
-                );
-              }}
-            >
+            <TouchableOpacity style={styles.flipContainer} onPress={handleSetTypeCamera}>
               <MaterialCommunityIcons name="camera-flip-outline" size={34} color="#fff" />
             </TouchableOpacity>
           </View>

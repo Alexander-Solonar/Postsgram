@@ -10,11 +10,11 @@ import {
   Pressable,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Context } from '../context/Context';
 import { Feather } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
 
 const Post = ({ like }) => {
-  const { posts } = useContext(Context);
+  const posts = useSelector(state => state.posts.data);
   const navigation = useNavigation();
   const screenWidth = Dimensions.get('window').width;
   const scale = 0.91;

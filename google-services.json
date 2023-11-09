@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "823057902825",
+    "project_id": "postsgram-b02ae",
+    "storage_bucket": "postsgram-b02ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823057902825:android:0d30f359c6809ea9ea5478",
+        "android_client_info": {
+          "package_name": "com.postsgram"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzIxpo5PoNoa37Xb67d1thTIwpJKfDbkE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

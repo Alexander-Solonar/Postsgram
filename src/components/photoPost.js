@@ -1,11 +1,10 @@
-import { useContext } from 'react';
 import { StyleSheet, View, Pressable, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Context } from '../context/Context';
 import { Ionicons } from '@expo/vector-icons';
+import { useSelector } from 'react-redux';
 
 const PhotoPost = () => {
-  const { photoUrl } = useContext(Context);
+  const photoUrl = useSelector(state => state.newPhoto);
   const navigation = useNavigation();
 
   return (

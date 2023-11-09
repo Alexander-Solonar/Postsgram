@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -11,15 +11,19 @@ import {
 import { Formik } from 'formik';
 import { Feather } from '@expo/vector-icons';
 import PhotoPost from '../components/photoPost';
-import { Context } from '../context/Context';
+
 import ButtonPrimary from '../components/buttonPrimary';
 import { DeleteButton } from '../components/buttonIcons';
 import * as Location from 'expo-location';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setPhotoUrl } from '../redux/photoUrlSlice';
+import { addPost } from '../redux/postsSlice';
 
 const CreatePostsScreen = () => {
-  const { photoUrl, setPhotoUrl } = useContext(Context);
-  const { posts, setPosts } = useContext(Context);
+  const photoUrl = useSelector(state => state.newPhoto);
+  const dispatch = useDispatch();
+
   const [location, setLocation] = useState(null);
   const [isFocused, setIsFocused] = useState('');
   const navigation = useNavigation();
@@ -46,15 +50,15 @@ const CreatePostsScreen = () => {
   }, []);
 
   const handleFormSubmit = (values, { resetForm }) => {
-    setPosts([...posts, { ...values, photoUrl, location, id: Math.random() }]);
+    dispatch(addPost({ ...values, photoUrl, location, id: Math.random() }));
 
     navigation.goBack();
     resetForm();
-    setPhotoUrl('');
+    dispatch(setPhotoUrl(''));
   };
 
   const handleDelete = handleChange => {
-    setPhotoUrl('');
+    dispatch(setPhotoUrl(''));
     handleChange('title')('');
     handleChange('place')('');
   };
