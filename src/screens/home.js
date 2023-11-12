@@ -2,38 +2,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import PostsScreen from './postsScreen';
 import CreatePostsScreen from './createPostsScreen';
-import { ButtonArrowLeft, ButtonUpload } from '../components/buttonIcons';
+import { ButtonArrowLeft, ButtonUpload, createIconComponent } from '../components/buttonIcons';
 import ProfileScreen from './profileScreen';
-import { useRoute } from '@react-navigation/native';
 
 const Tabs = createBottomTabNavigator();
-const createIconComponent = (IconComponent, name, focused) => (
-  <IconComponent name={name} size={24} color={focused ? '#fff' : 'rgba(33, 33, 33, 0.8)'} />
-);
-
-const styleHeader = {
-  headerTitleAlign: 'center',
-  headerStyle: {
-    borderBottomWidth: 1,
-  },
-  headerTitleStyle: {
-    fontSize: 17,
-    fontWeight: 'bold',
-    color: '#212121',
-  },
-};
-
-const tabBarStyle = {
-  paddingHorizontal: 81,
-  borderTopWidth: 1,
-  paddingVertical: 10,
-  height: 60,
-};
-
-const tabBarItemStyle = {
-  height: 40,
-  borderRadius: 50,
-};
 
 const Home = () => {
   return (
@@ -80,6 +52,31 @@ const Home = () => {
       />
     </Tabs.Navigator>
   );
+};
+
+const styleHeader = {
+  headerTitleAlign: 'center',
+  headerStyle: {
+    height: 83,
+    borderBottomWidth: 1,
+  },
+  headerTitleStyle: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#212121',
+  },
+};
+
+const tabBarStyle = {
+  paddingHorizontal: 81,
+  borderTopWidth: 1,
+  paddingVertical: 10,
+  height: 60,
+};
+
+const tabBarItemStyle = {
+  height: 40,
+  borderRadius: 50,
 };
 
 export default Home;

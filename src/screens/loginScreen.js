@@ -6,26 +6,32 @@ import {
   KeyboardAvoidingView,
   Pressable,
   Keyboard,
+  Platform,
+  Dimensions,
 } from 'react-native';
 import image from '../assets/images/photo.jpg';
 import { useNavigation } from '@react-navigation/native';
 import FormLogin from '../components/formLogin';
 
+const screenHeight = Dimensions.get('window').height;
+const paddingBottomContainer = (screenHeight * 17.7) / 100;
+
 const LoginScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <ImageBackground style={styles.image} source={image} resizeMode="cover">
+    <ImageBackground style={styles.image} source={image}>
       <Pressable onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <Text style={styles.title}>Увійти</Text>
-          <KeyboardAvoidingView style={{ width: '100%' }} behavior="padding">
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <View style={styles.container}>
+            <Text style={styles.title}>Увійти</Text>
+
             <FormLogin />
             <Text style={styles.link} onPress={() => navigation.navigate('Registration')}>
               Немає акаунту? Зареєструватися
             </Text>
-          </KeyboardAvoidingView>
-        </View>
+          </View>
+        </KeyboardAvoidingView>
       </Pressable>
     </ImageBackground>
   );
@@ -35,12 +41,13 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     justifyContent: 'flex-end',
+    resizeMode: 'cover',
   },
 
   container: {
     paddingHorizontal: 16,
     paddingTop: 32,
-    alignItems: 'center',
+    paddingBottom: paddingBottomContainer,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: '#fff',
@@ -58,7 +65,6 @@ const styles = StyleSheet.create({
   },
 
   link: {
-    marginBottom: 144,
     textAlign: 'center',
     fontFamily: 'Roboto',
     fontSize: 16,

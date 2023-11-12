@@ -1,15 +1,15 @@
+import { useSelector } from 'react-redux';
 import { StyleSheet, View, Pressable, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
 
 const PhotoPost = () => {
-  const photoUrl = useSelector(state => state.newPhoto);
+  const urlPhoto = useSelector(state => state.urlPhoto);
   const navigation = useNavigation();
 
   return (
     <View style={styles.imageContainer}>
-      {photoUrl && <Image style={{ width: '100%', height: 240 }} source={{ uri: photoUrl }} />}
+      {urlPhoto && <Image style={styles.image} source={{ uri: urlPhoto }} />}
       <Pressable style={styles.iconCamera} onPress={() => navigation.navigate('CameraScreen')}>
         <Ionicons name="camera" size={24} color="#BDBDBD" />
       </Pressable>
@@ -36,9 +36,14 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     transform: [{ translateX: -30 }, { translateY: -30 }],
-    opacity: 0.5,
+    opacity: 0.8,
     borderRadius: 60,
     backgroundColor: '#fff',
+  },
+
+  image: {
+    width: '100%',
+    height: 240,
   },
 });
 

@@ -46,13 +46,17 @@ const DeleteButton = ({ handleDelete, isDisabled = true }) => {
     ...styles.btnDelete,
     backgroundColor: isDisabled ? '#F6F6F6' : '#FF6C00',
   };
-  const deleteIconColor = isDisabled ? '#BDBDBD' : '#fff';
 
+  const deleteIconColor = isDisabled ? '#BDBDBD' : '#fff';
   return (
     <Pressable style={btnDeleteStyle} disabled={isDisabled} onPress={handleDelete}>
       <Feather name="trash-2" size={24} color={deleteIconColor} />
     </Pressable>
   );
+};
+
+const createIconComponent = (IconComponent, name, focused) => {
+  return <IconComponent name={name} size={24} color={focused ? '#fff' : 'rgba(33, 33, 33, 0.8)'} />;
 };
 
 const styles = StyleSheet.create({
@@ -87,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { ButtonUpload, ButtonArrowLeft, ButtonSendComment, DeleteButton };
+export { ButtonUpload, ButtonArrowLeft, ButtonSendComment, DeleteButton, createIconComponent };

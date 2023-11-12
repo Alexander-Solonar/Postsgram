@@ -7,34 +7,38 @@ import {
   Image,
   Pressable,
   Keyboard,
+  Platform,
+  Dimensions,
 } from 'react-native';
 import image from '../assets/images/photo.jpg';
 import iconAdd from '../assets/images/iconAdd.png';
 import { useNavigation } from '@react-navigation/native';
 import FormRegistration from '../components/formRegistration';
 
+const screenHeight = Dimensions.get('window').height;
+const paddingBottomContainer = (screenHeight * 9.6) / 100;
+
 const RegistrationScreen = () => {
   const navigation = useNavigation();
 
   return (
-    <ImageBackground style={styles.imageBackground} source={image} resizeMode="cover">
+    <ImageBackground style={styles.imageBackground} source={image}>
       <Pressable onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <View style={styles.userAvatar}>
-            <Image style={styles.iconAddAvatar} source={iconAdd} />
-          </View>
-          <Text style={styles.title}>Реєстрація</Text>
-          <KeyboardAvoidingView
-            style={{ width: '100%' }}
-            behavior="padding"
-            keyboardVerticalOffset={40}
-          >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          keyboardVerticalOffset={paddingBottomContainer}
+        >
+          <View style={styles.container}>
+            <View style={styles.userAvatar}>
+              <Image style={styles.iconAddAvatar} source={iconAdd} />
+            </View>
+            <Text style={styles.title}>Реєстрація</Text>
             <FormRegistration />
             <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
               Вже є акаунт? Увійти
             </Text>
-          </KeyboardAvoidingView>
-        </View>
+          </View>
+        </KeyboardAvoidingView>
       </Pressable>
     </ImageBackground>
   );
@@ -43,13 +47,13 @@ const RegistrationScreen = () => {
 const styles = StyleSheet.create({
   imageBackground: {
     flex: 1,
+    resizeMode: 'cover',
     justifyContent: 'flex-end',
   },
   container: {
     paddingHorizontal: 16,
     paddingTop: 92,
-
-    alignItems: 'center',
+    paddingBottom: paddingBottomContainer,
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: '#fff',
@@ -58,8 +62,10 @@ const styles = StyleSheet.create({
   userAvatar: {
     position: 'absolute',
     top: -60,
+    right: '50%',
     width: 120,
     height: 120,
+    transform: [{ translateX: 50 }],
     borderRadius: 16,
     backgroundColor: '#F6F6F6',
   },
@@ -82,7 +88,6 @@ const styles = StyleSheet.create({
   },
 
   link: {
-    marginBottom: 78,
     textAlign: 'center',
     fontFamily: 'Roboto',
     fontSize: 16,

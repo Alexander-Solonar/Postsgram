@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { StyleSheet, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Text } from 'react-native';
 import { useFonts } from 'expo-font';
 import 'react-native-gesture-handler';
 import RegistrationScreen from './src/screens/registrationScreen';
@@ -9,10 +12,8 @@ import Home from './src/screens/home';
 import CommentsScreen from './src/screens/commentsScreen';
 import MapScreen from './src/screens/mapScreen';
 import CameraScreen from './src/screens/cameraScreen';
-// import ContextProvider from './src/context/Context';
-import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
 import store from './src/redux/store';
+import { auth } from './config';
 
 const MainStack = createStackNavigator();
 
@@ -20,7 +21,17 @@ export default () => {
   const [fontsLoaded] = useFonts({
     Roboto: require('./src/assets/fonts/Roboto-Medium.ttf'),
   });
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(user => {
+      setUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
+  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
   if (!fontsLoaded) {
     return null;
   }
@@ -28,7 +39,6 @@ export default () => {
   return (
     <Provider store={store.store}>
       <PersistGate loading={<Text>Loading...</Text>} persistor={store.persistor}>
-        {/* <ContextProvider> */}
         <NavigationContainer style={styles.container}>
           <MainStack.Navigator initialRouteName="Registration">
             <MainStack.Screen
@@ -80,7 +90,6 @@ export default () => {
             />
           </MainStack.Navigator>
         </NavigationContainer>
-        {/* </ContextProvider> */}
       </PersistGate>
     </Provider>
   );

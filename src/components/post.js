@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
-import { useSelector } from 'react-redux';
 
 const Post = ({ like }) => {
   const posts = useSelector(state => state.posts.data);
@@ -27,7 +26,7 @@ const Post = ({ like }) => {
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
           <View style={{ marginBottom: 32 }}>
-            <Image style={{ ...styles.image, width: imageWidth }} source={{ uri: item.photoUrl }} />
+            <Image style={{ ...styles.image, width: imageWidth }} source={{ uri: item.urlPhoto }} />
             <Text style={styles.title}>{item.title}</Text>
             <View style={styles.informationBlock}>
               <View style={styles.block}>

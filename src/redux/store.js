@@ -10,20 +10,23 @@ import {
   REGISTER,
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { postsReducer } from './postsSlice';
-import { photoUrlReducer } from './photoUrlSlice';
+import { authReducer } from './authSlice';
+import { urlPhotoReducer } from './urlPhotoSlice';
 
 const persistConfig = {
-  key: 'posts',
+  key: 'user',
   storage: AsyncStorage,
 };
 
-const userPosts = persistReducer(persistConfig, postsReducer);
+const user = persistReducer(persistConfig, authReducer);
 
 const store = configureStore({
   reducer: {
-    posts: userPosts,
-    newPhoto: photoUrlReducer,
+    auth: user,
+    posts: postsReducer,
+    urlPhoto: urlPhotoReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

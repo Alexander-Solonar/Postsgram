@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   StyleSheet,
   View,
@@ -6,27 +7,29 @@ import {
   Keyboard,
   TextInput,
   Pressable,
-  KeyboardAvoidingView,
+  ScrollView,
+  SafeAreaView,
+  Dimensions,
 } from 'react-native';
-import { Formik } from 'formik';
-import { Feather } from '@expo/vector-icons';
-import PhotoPost from '../components/photoPost';
-
-import ButtonPrimary from '../components/buttonPrimary';
-import { DeleteButton } from '../components/buttonIcons';
-import * as Location from 'expo-location';
 import { useNavigation } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
-import { setPhotoUrl } from '../redux/photoUrlSlice';
+import * as Location from 'expo-location';
+import { Feather } from '@expo/vector-icons';
+import { Formik } from 'formik';
 import { addPost } from '../redux/postsSlice';
+import { setUrlPhoto } from '../redux/urlPhotoSlice';
+import { DeleteButton } from '../components/buttonIcons';
+import PhotoPost from '../components/photoPost';
+import ButtonPrimary from '../components/buttonPrimary';
+
+const screenHeight = Dimensions.get('window').height;
+const tabBarHeight = 83;
 
 const CreatePostsScreen = () => {
-  const photoUrl = useSelector(state => state.newPhoto);
-  const dispatch = useDispatch();
-
   const [location, setLocation] = useState(null);
   const [isFocused, setIsFocused] = useState('');
+  const urlPhoto = useSelector(state => state.urlPhoto);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const initialValues = {
     title: '',
@@ -50,81 +53,87 @@ const CreatePostsScreen = () => {
   }, []);
 
   const handleFormSubmit = (values, { resetForm }) => {
-    dispatch(addPost({ ...values, photoUrl, location, id: Math.random() }));
-
-    navigation.goBack();
+    dispatch(addPost({ ...values, urlPhoto, location, id: Math.random() }));
+    dispatch(setUrlPhoto(''));
     resetForm();
-    dispatch(setPhotoUrl(''));
+    navigation.goBack();
   };
 
-  const handleDelete = handleChange => {
-    dispatch(setPhotoUrl(''));
+  const handleResetForm = handleChange => {
+    dispatch(setUrlPhoto(''));
     handleChange('title')('');
     handleChange('place')('');
   };
 
-  const styleInputContainer = title => ({
+  const styleInputContainer = input => ({
     ...styles.inputContainer,
-    borderBottomColor: isFocused === title ? 'green' : '#E8E8E8',
+    borderBottomColor: isFocused === input ? 'green' : '#E8E8E8',
   });
-
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding" keyboardVerticalOffset={20}>
-      <Pressable style={{ flex: 1 }} onPress={Keyboard.dismiss}>
-        <Formik style={{ flex: 1 }} initialValues={initialValues} onSubmit={handleFormSubmit}>
-          {({ handleChange, handleSubmit, values }) => (
-            <View style={styles.container}>
-              <PhotoPost />
-              <Text style={styles.text}>{photoUrl ? 'Редагувати фото' : 'Завантажте фото'}</Text>
-              <View style={styles.form}>
-                <View style={styleInputContainer('title')}>
-                  <TextInput
-                    style={styles.input}
-                    value={values.title}
-                    placeholder="Назва..."
-                    placeholderTextColor="#BDBDBD"
-                    onFocus={() => setIsFocused('title')}
-                    onBlur={() => setIsFocused('')}
-                    onChangeText={handleChange('title')}
-                  />
-                </View>
-                <View style={styleInputContainer('place')}>
-                  <Feather name="map-pin" size={24} color="#BDBDBD" />
-                  <TextInput
-                    style={styles.input}
-                    value={values.place}
-                    placeholder="Місцевість..."
-                    placeholderTextColor="#BDBDBD"
-                    onFocus={() => setIsFocused('place')}
-                    onBlur={() => setIsFocused('')}
-                    onChangeText={handleChange('place')}
-                  />
-                </View>
-              </View>
+    <SafeAreaView style={styles.wrapper}>
+      <ScrollView>
+        <Pressable onPress={Keyboard.dismiss}>
+          <View style={styles.container}>
+            <PhotoPost />
+            <Text style={styles.text}>{urlPhoto ? 'Редагувати фото' : 'Завантажте фото'}</Text>
+            <Formik initialValues={initialValues} onSubmit={handleFormSubmit}>
+              {({ handleChange, handleSubmit, values }) => (
+                <>
+                  <View style={styles.form}>
+                    <View style={styleInputContainer('title')}>
+                      <TextInput
+                        style={styles.input}
+                        value={values.title}
+                        placeholder="Назва..."
+                        placeholderTextColor="#BDBDBD"
+                        onFocus={() => setIsFocused('title')}
+                        onBlur={() => setIsFocused('')}
+                        onChangeText={handleChange('title')}
+                      />
+                    </View>
+                    <View style={styleInputContainer('place')}>
+                      <Feather name="map-pin" size={24} color="#BDBDBD" />
+                      <TextInput
+                        style={styles.input}
+                        value={values.place}
+                        placeholder="Місцевість..."
+                        placeholderTextColor="#BDBDBD"
+                        onFocus={() => setIsFocused('place')}
+                        onBlur={() => setIsFocused('')}
+                        onChangeText={handleChange('place')}
+                      />
+                    </View>
+                  </View>
 
-              <View style={styles.btnContainer}>
-                <ButtonPrimary
-                  text="Опубліковати"
-                  isDisabled={!(!!photoUrl && !!values.place && !!values.title)}
-                  handleSubmit={handleSubmit}
-                />
-                <DeleteButton
-                  isDisabled={!(!!photoUrl && !!values.place && !!values.title)}
-                  handleDelete={() => handleDelete(handleChange)}
-                />
-              </View>
-            </View>
-          )}
-        </Formik>
-      </Pressable>
-    </KeyboardAvoidingView>
+                  <View style={styles.btnContainer}>
+                    <ButtonPrimary
+                      text="Опубліковати"
+                      isDisabled={!urlPhoto || !values.place.trim() || !values.title.trim()}
+                      handleSubmit={handleSubmit}
+                    />
+                    <DeleteButton
+                      isDisabled={!urlPhoto || !values.place.trim() || !values.title.trim()}
+                      handleDelete={() => handleResetForm(handleChange)}
+                    />
+                  </View>
+                </>
+              )}
+            </Formik>
+          </View>
+        </Pressable>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  wrapper: {
     flex: 1,
-    justifyContent: 'flex-end',
+    backgroundColor: '#fff',
+  },
+
+  container: {
+    height: screenHeight - tabBarHeight,
     paddingVertical: 32,
     paddingHorizontal: 16,
     backgroundColor: '#fff',
@@ -161,9 +170,8 @@ const styles = StyleSheet.create({
 
   btnContainer: {
     flex: 1,
-    justifyContent: 'space-between',
     alignItems: 'center',
-    rowGap: 15,
+    justifyContent: 'space-between',
   },
 });
 

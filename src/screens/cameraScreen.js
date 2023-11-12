@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
-import { useNavigation } from '@react-navigation/native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { useDispatch } from 'react-redux';
-import { setPhotoUrl } from '../redux/photoUrlSlice';
+import { setUrlPhoto } from '../redux/urlPhotoSlice';
 
 const CameraScreen = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -30,7 +30,7 @@ const CameraScreen = () => {
   const handlePress = async () => {
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
-      dispatch(setPhotoUrl(uri));
+      dispatch(setUrlPhoto(uri));
       navigation.goBack();
     }
   };

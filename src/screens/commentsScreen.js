@@ -1,8 +1,8 @@
-import { StyleSheet, View, Keyboard, TextInput, FlatList, Pressable } from 'react-native';
-import Comment from '../components/comment';
-import { ButtonSendComment } from '../components/buttonIcons';
-import PhotoPost from '../components/photoPost';
 import { useState } from 'react';
+import { StyleSheet, View, Keyboard, TextInput, FlatList, Pressable } from 'react-native';
+import { ButtonSendComment } from '../components/buttonIcons';
+import Comment from '../components/comment';
+import PhotoPost from '../components/photoPost';
 
 const messages = [
   {
