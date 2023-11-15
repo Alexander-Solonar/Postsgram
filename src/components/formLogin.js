@@ -1,27 +1,15 @@
 import { useState } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+
 import { Formik } from 'formik';
-import { loginDB } from '../firebase/server';
 import ButtonPrimary from './buttonPrimary';
 
-const FormLogin = () => {
+const FormLogin = ({ handleFormSubmit }) => {
   const [isFocused, setIsFocused] = useState('');
-  const navigation = useNavigation();
 
   const initialValues = {
     email: '',
     password: '',
-  };
-
-  const handleFormSubmit = async ({ email, password }, { resetForm }) => {
-    try {
-      await loginDB({ email, password });
-      resetForm();
-      navigation.navigate('Home', { screen: 'Публікації', params: { email } });
-    } catch (error) {
-      console.error('Помилка входу:', error);
-    }
   };
 
   const styleInput = input => ({

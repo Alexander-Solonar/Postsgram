@@ -7,11 +7,11 @@ import { ButtonUpload } from '../components/buttonIcons';
 import iconDelete from '../assets/images/iconDelete.png';
 
 const ProfileScreen = () => {
+  const navigation = useNavigation();
   const data = {
     login: 'Natali Romanova',
     email: 'email@example.com',
   };
-  const navigation = useNavigation();
 
   return (
     <ImageBackground style={styles.imageBackground} source={image} resizeMode="cover">

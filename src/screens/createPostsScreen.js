@@ -20,6 +20,8 @@ import { setUrlPhoto } from '../redux/urlPhotoSlice';
 import { DeleteButton } from '../components/buttonIcons';
 import PhotoPost from '../components/photoPost';
 import ButtonPrimary from '../components/buttonPrimary';
+import { addDoc, collection } from 'firebase/firestore';
+import { db } from '../../config';
 
 const screenHeight = Dimensions.get('window').height;
 const tabBarHeight = 83;
@@ -52,7 +54,23 @@ const CreatePostsScreen = () => {
     })();
   }, []);
 
+  // const writeDataToFirestore = async () => {
+  //   try {
+  //     const docRef = await addDoc(collection(db, 'users'), {
+  //       first: 'Ada',
+  //       last: 'Lovelace',
+  //       born: 1815,
+  //     });
+  //     console.log('Document written with ID: ', docRef.id);
+  //   } catch (e) {
+  //     console.error('Error adding document: ', e);
+  //     throw e;
+  //   }
+  // };
+
   const handleFormSubmit = (values, { resetForm }) => {
+    // writeDataToFirestore();
+
     dispatch(addPost({ ...values, urlPhoto, location, id: Math.random() }));
     dispatch(setUrlPhoto(''));
     resetForm();

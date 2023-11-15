@@ -2,13 +2,15 @@ import React from 'react';
 import { StyleSheet, Pressable } from 'react-native';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { Logout } from '../firebase/server';
 
 const ButtonUpload = () => {
   const navigation = useNavigation();
   return (
     <AntDesign
       onPress={() => {
-        navigation.goBack();
+        Logout();
+        navigation.navigate('Login');
       }}
       style={styles.btnUpload}
       name="upload"

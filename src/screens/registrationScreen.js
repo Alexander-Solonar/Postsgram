@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import {
   ImageBackground,
   StyleSheet,
@@ -10,16 +11,38 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { registerDB, updateUserProfile } from '../firebase/server';
+import { setUserProfile } from '../redux/authSlice';
+import FormRegistration from '../components/formRegistration';
 import image from '../assets/images/photo.jpg';
 import iconAdd from '../assets/images/iconAdd.png';
-import { useNavigation } from '@react-navigation/native';
-import FormRegistration from '../components/formRegistration';
 
 const screenHeight = Dimensions.get('window').height;
 const paddingBottomContainer = (screenHeight * 9.6) / 100;
 
 const RegistrationScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleFormSubmit = async ({ login, email, password }, { resetForm }) => {
+    try {
+      const { user } = await registerDB({ email, password });
+      await updateUserProfile({ displayName: login });
+
+      dispatch(
+        setUserProfile({
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        })
+      );
+      resetForm();
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error('Помилка реєстрації:', error);
+    }
+  };
 
   return (
     <ImageBackground style={styles.imageBackground} source={image}>
@@ -33,7 +56,7 @@ const RegistrationScreen = () => {
               <Image style={styles.iconAddAvatar} source={iconAdd} />
             </View>
             <Text style={styles.title}>Реєстрація</Text>
-            <FormRegistration />
+            <FormRegistration handleFormSubmit={handleFormSubmit} />
             <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
               Вже є акаунт? Увійти
             </Text>

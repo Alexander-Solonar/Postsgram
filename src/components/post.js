@@ -13,7 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 
 const Post = ({ like }) => {
-  const posts = useSelector(state => state.posts.data);
+  const posts = useSelector(state => state.posts);
   const navigation = useNavigation();
   const screenWidth = Dimensions.get('window').width;
   const scale = 0.91;

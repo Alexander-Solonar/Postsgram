@@ -1,20 +1,34 @@
 import { StyleSheet, View, Text, Image } from 'react-native';
 import Post from '../components/post';
 import avatar from '../assets/images/user.jpg';
-import { useRoute } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../config';
 
 const PostsScreen = () => {
-  const {
-    params: { login, email },
-  } = useRoute();
+  const user = useSelector(state => state.auth);
 
+  // const getDataFromFirestore = async () => {
+  //   try {
+  //     const snapshot = await getDocs(collection(db, 'users'));
+  //     // Перевіряємо у консолі отримані дані
+  //     snapshot.forEach(doc => console.log(`${doc.id} =>`, doc.data()));
+  //   } catch (error) {
+  //     console.log(error);
+  //     throw error;
+  //   }
+  // };
+
+  // getDataFromFirestore();
+  // console.log('D');
   return (
     <View style={styles.container}>
       <View style={styles.userInformContainer}>
         <Image style={styles.userPhoto} source={avatar} />
         <View>
-          <Text style={styles.userLogin}>{login}</Text>
-          <Text style={styles.userEmail}>{email}</Text>
+          <Text style={styles.userLogin}>{user.displayName}</Text>
+          <Text style={styles.userEmail}>{user.email}</Text>
         </View>
       </View>
       <Post />

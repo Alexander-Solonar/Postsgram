@@ -3,12 +3,10 @@ import defaultPosts from '../data/dataPosts.json';
 
 const postsSlice = createSlice({
   name: 'posts',
-  initialState: {
-    data: defaultPosts,
-  },
+  initialState: [...defaultPosts],
   reducers: {
     addPost(state, action) {
-      state.data.push(action.payload);
+      state.push(action.payload);
     },
   },
 });

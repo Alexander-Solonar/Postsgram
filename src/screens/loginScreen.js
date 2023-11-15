@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import {
   ImageBackground,
   StyleSheet,
@@ -9,15 +10,37 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
-import image from '../assets/images/photo.jpg';
 import { useNavigation } from '@react-navigation/native';
+import { loginDB } from '../firebase/server';
+import { setUserProfile } from '../redux/authSlice';
 import FormLogin from '../components/formLogin';
+import image from '../assets/images/photo.jpg';
 
 const screenHeight = Dimensions.get('window').height;
 const paddingBottomContainer = (screenHeight * 17.7) / 100;
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const handleFormSubmit = async ({ email, password }, { resetForm }) => {
+    try {
+      const user = await loginDB({ email, password });
+
+      dispatch(
+        setUserProfile({
+          displayName: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        })
+      );
+
+      resetForm();
+      navigation.navigate('Home');
+    } catch (error) {
+      console.error('Помилка входу:', error);
+    }
+  };
 
   return (
     <ImageBackground style={styles.image} source={image}>
@@ -26,7 +49,7 @@ const LoginScreen = () => {
           <View style={styles.container}>
             <Text style={styles.title}>Увійти</Text>
 
-            <FormLogin />
+            <FormLogin handleFormSubmit={handleFormSubmit} />
             <Text style={styles.link} onPress={() => navigation.navigate('Registration')}>
               Немає акаунту? Зареєструватися
             </Text>

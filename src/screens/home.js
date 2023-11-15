@@ -14,7 +14,7 @@ const Home = () => {
         tabBarIcon: ({ focused }) => {
           if (route.name === 'Публікації') {
             return createIconComponent(Feather, 'grid', focused);
-          } else if (route.name === 'Створити') {
+          } else if (route.name === 'Створити публікацію') {
             return createIconComponent(Ionicons, 'add', focused);
           } else if (route.name === 'Профіль') {
             return createIconComponent(Feather, 'user', focused);
@@ -35,7 +35,7 @@ const Home = () => {
         }}
       />
       <Tabs.Screen
-        name="Створити"
+        name="Створити публікацію"
         component={CreatePostsScreen}
         options={{
           ...styleHeader,
@@ -57,7 +57,7 @@ const Home = () => {
 const styleHeader = {
   headerTitleAlign: 'center',
   headerStyle: {
-    height: 83,
+    height: 44,
     borderBottomWidth: 1,
   },
   headerTitleStyle: {

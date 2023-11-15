@@ -11,7 +11,7 @@ export const registerDB = ({ email, password }) =>
   createUserWithEmailAndPassword(auth, email, password);
 
 export const authStateChanged = async (onChange = () => {}) => {
-  onAuthStateChanged(user => {
+  onAuthStateChanged(auth, user => {
     onChange(user);
   });
 };
@@ -25,13 +25,22 @@ export const loginDB = async ({ email, password }) => {
   }
 };
 
-const updateUserProfile = async update => {
+export const updateUserProfile = async update => {
   const user = auth.currentUser;
+
   if (user) {
     try {
       await updateProfile(user, update);
     } catch (error) {
       throw error;
     }
+  }
+};
+
+export const Logout = async () => {
+  try {
+    await auth.signOut();
+  } catch (error) {
+    throw error;
   }
 };

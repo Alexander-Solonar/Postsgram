@@ -1,28 +1,15 @@
 import { useState } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { Formik } from 'formik';
-import { registerDB } from '../firebase/server';
 import ButtonPrimary from './buttonPrimary';
 
-const FormRegistration = () => {
+const FormRegistration = ({ handleFormSubmit }) => {
   const [isFocused, setIsFocused] = useState('');
-  const navigation = useNavigation();
 
   const initialValues = {
     login: '',
     email: '',
     password: '',
-  };
-
-  const handleFormSubmit = async ({ login, email, password }, { resetForm }) => {
-    try {
-      // await registerDB({ email, password });
-      resetForm();
-      navigation.navigate('Home', { screen: 'Публікації', params: { login, email } });
-    } catch (error) {
-      console.error('Помилка реєстрації:', error);
-    }
   };
 
   const styleInput = input => ({
