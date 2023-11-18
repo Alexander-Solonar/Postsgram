@@ -1,5 +1,5 @@
 import { ImageBackground, StyleSheet, View, Text, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import Post from '../components/post';
 import image from '../assets/images/photo.jpg';
 import avatar from '../assets/images/user.jpg';
@@ -7,11 +7,7 @@ import { ButtonUpload } from '../components/buttonIcons';
 import iconDelete from '../assets/images/iconDelete.png';
 
 const ProfileScreen = () => {
-  const navigation = useNavigation();
-  const data = {
-    login: 'Natali Romanova',
-    email: 'email@example.com',
-  };
+  const user = useSelector(state => state.auth);
 
   return (
     <ImageBackground style={styles.imageBackground} source={image} resizeMode="cover">
@@ -23,7 +19,7 @@ const ProfileScreen = () => {
         <View style={styles.btnOut}>
           <ButtonUpload />
         </View>
-        <Text style={styles.title}>{data.login}</Text>
+        <Text style={styles.title}>{user.displayName}</Text>
         <Post like={true} />
       </View>
     </ImageBackground>

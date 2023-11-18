@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { postsReducer } from './postsSlice';
 import { authReducer } from './authSlice';
-import { urlPhotoReducer } from './urlPhotoSlice';
+import { postPhotoReducer } from './postPhotoSlice';
 
 const persistConfig = {
   key: 'user',
@@ -26,7 +26,7 @@ const store = configureStore({
   reducer: {
     auth: user,
     posts: postsReducer,
-    urlPhoto: urlPhotoReducer,
+    postPhoto: postPhotoReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

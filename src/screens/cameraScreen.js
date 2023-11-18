@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { setUrlPhoto } from '../redux/urlPhotoSlice';
+import { setPostPhoto } from '../redux/postPhotoSlice';
 
 const CameraScreen = () => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -30,7 +30,7 @@ const CameraScreen = () => {
   const handlePress = async () => {
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
-      dispatch(setUrlPhoto(uri));
+      dispatch(setPostPhoto(uri));
       navigation.goBack();
     }
   };

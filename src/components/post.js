@@ -25,7 +25,7 @@ const Post = ({ like }) => {
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <View style={styles.container}>
-              <Image style={styles.image} source={{ uri: item.urlPhoto }} />
+              <Image style={styles.image} source={{ uri: item.postPhoto }} />
               <Text style={styles.title}>{item.title}</Text>
               <View style={styles.informationBlock}>
                 <View style={styles.block}>

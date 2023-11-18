@@ -15,7 +15,7 @@ import { useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import { Feather } from '@expo/vector-icons';
 import { Formik } from 'formik';
-import { setUrlPhoto } from '../redux/urlPhotoSlice';
+import { setPostPhoto } from '../redux/postPhotoSlice';
 import { DeleteButton } from '../components/buttonIcons';
 import PhotoPost from '../components/photoPost';
 import ButtonPrimary from '../components/buttonPrimary';
@@ -27,7 +27,7 @@ const tabBarHeight = 83;
 const CreatePostsScreen = () => {
   const [location, setLocation] = useState(null);
   const [isFocused, setIsFocused] = useState('');
-  const urlPhoto = useSelector(state => state.urlPhoto);
+  const postPhoto = useSelector(state => state.postPhoto);
   const uid = useSelector(state => state.auth.uid);
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -39,24 +39,28 @@ const CreatePostsScreen = () => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        console.log('Permission to access location was denied');
+      try {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          console.log('Permission to access location was denied');
+          return;
+        }
+        let location = await Location.getCurrentPositionAsync({});
+        const coords = {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        };
+        setLocation(coords);
+      } catch (error) {
+        console.error('Error while requesting location:', error);
       }
-
-      let location = await Location.getCurrentPositionAsync({});
-      const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      setLocation(coords);
     })();
   }, []);
 
   const handleFormSubmit = (values, { resetForm }) => {
     const newPost = {
       ...values,
-      urlPhoto,
+      postPhoto,
       location,
       id: Math.random(),
       comments: [],
@@ -64,13 +68,13 @@ const CreatePostsScreen = () => {
     };
 
     dispatch(addPost({ docId: uid, data: newPost }));
-    dispatch(setUrlPhoto(''));
+    dispatch(setPostPhoto(''));
     resetForm();
     navigation.goBack();
   };
 
   const handleResetForm = handleChange => {
-    dispatch(setUrlPhoto(''));
+    dispatch(setPostPhoto(''));
     handleChange('title')('');
     handleChange('place')('');
   };
@@ -85,7 +89,7 @@ const CreatePostsScreen = () => {
         <Pressable onPress={Keyboard.dismiss}>
           <View style={styles.container}>
             <PhotoPost />
-            <Text style={styles.text}>{urlPhoto ? 'Редагувати фото' : 'Завантажте фото'}</Text>
+            <Text style={styles.text}>{postPhoto ? 'Редагувати фото' : 'Завантажте фото'}</Text>
             <Formik initialValues={initialValues} onSubmit={handleFormSubmit}>
               {({ handleChange, handleSubmit, values }) => (
                 <>
@@ -118,11 +122,11 @@ const CreatePostsScreen = () => {
                   <View style={styles.btnContainer}>
                     <ButtonPrimary
                       text="Опубліковати"
-                      isDisabled={!urlPhoto || !values.place.trim() || !values.title.trim()}
+                      isDisabled={!postPhoto || !values.place.trim() || !values.title.trim()}
                       handleSubmit={handleSubmit}
                     />
                     <DeleteButton
-                      isDisabled={!urlPhoto || !values.place.trim() || !values.title.trim()}
+                      isDisabled={!postPhoto || !values.place.trim() || !values.title.trim()}
                       handleDelete={() => handleResetForm(handleChange)}
                     />
                   </View>

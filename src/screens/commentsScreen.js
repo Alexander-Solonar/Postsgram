@@ -51,7 +51,7 @@ const CommentsScreen = () => {
           data={items[postIndex].comments}
           keyExtractor={item => item.id}
           ListHeaderComponent={
-            <Image style={styles.image} source={{ uri: items[postIndex].urlPhoto }} />
+            <Image style={styles.image} source={{ uri: items[postIndex].postPhoto }} />
           }
           ListHeaderComponentStyle={{ marginBottom: 32 }}
           renderItem={({ item }) => <Comment comment={item} />}

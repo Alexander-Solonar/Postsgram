@@ -4,12 +4,12 @@ import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 
 const PhotoPost = () => {
-  const urlPhoto = useSelector(state => state.urlPhoto);
+  const postPhoto = useSelector(state => state.postPhoto);
   const navigation = useNavigation();
 
   return (
     <View style={styles.imageContainer}>
-      {urlPhoto && <Image style={styles.image} source={{ uri: urlPhoto }} />}
+      {postPhoto && <Image style={styles.image} source={{ uri: postPhoto }} />}
       <Pressable style={styles.iconCamera} onPress={() => navigation.navigate('CameraScreen')}>
         <Ionicons name="camera" size={24} color="#BDBDBD" />
       </Pressable>
