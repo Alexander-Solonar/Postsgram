@@ -15,13 +15,11 @@ import { useNavigation } from '@react-navigation/native';
 import * as Location from 'expo-location';
 import { Feather } from '@expo/vector-icons';
 import { Formik } from 'formik';
-import { addPost } from '../redux/postsSlice';
 import { setUrlPhoto } from '../redux/urlPhotoSlice';
 import { DeleteButton } from '../components/buttonIcons';
 import PhotoPost from '../components/photoPost';
 import ButtonPrimary from '../components/buttonPrimary';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../../config';
+import { addPost } from '../redux/operations';
 
 const screenHeight = Dimensions.get('window').height;
 const tabBarHeight = 83;
@@ -30,6 +28,7 @@ const CreatePostsScreen = () => {
   const [location, setLocation] = useState(null);
   const [isFocused, setIsFocused] = useState('');
   const urlPhoto = useSelector(state => state.urlPhoto);
+  const uid = useSelector(state => state.auth.uid);
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -54,24 +53,17 @@ const CreatePostsScreen = () => {
     })();
   }, []);
 
-  // const writeDataToFirestore = async () => {
-  //   try {
-  //     const docRef = await addDoc(collection(db, 'users'), {
-  //       first: 'Ada',
-  //       last: 'Lovelace',
-  //       born: 1815,
-  //     });
-  //     console.log('Document written with ID: ', docRef.id);
-  //   } catch (e) {
-  //     console.error('Error adding document: ', e);
-  //     throw e;
-  //   }
-  // };
-
   const handleFormSubmit = (values, { resetForm }) => {
-    // writeDataToFirestore();
+    const newPost = {
+      ...values,
+      urlPhoto,
+      location,
+      id: Math.random(),
+      comments: [],
+      likes: 0,
+    };
 
-    dispatch(addPost({ ...values, urlPhoto, location, id: Math.random() }));
+    dispatch(addPost({ docId: uid, data: newPost }));
     dispatch(setUrlPhoto(''));
     resetForm();
     navigation.goBack();
@@ -189,6 +181,7 @@ const styles = StyleSheet.create({
   btnContainer: {
     flex: 1,
     alignItems: 'center',
+    rowGap: 40,
     justifyContent: 'space-between',
   },
 });

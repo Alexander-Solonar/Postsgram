@@ -20,7 +20,6 @@ const PhotoPost = () => {
 const styles = StyleSheet.create({
   imageContainer: {
     position: 'relative',
-    width: '100%',
     height: 240,
     borderWidth: 1,
     borderRadius: 8,
@@ -42,7 +41,6 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: '100%',
     height: 240,
   },
 });

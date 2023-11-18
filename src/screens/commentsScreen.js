@@ -1,34 +1,24 @@
 import { useState } from 'react';
 import { StyleSheet, View, Keyboard, TextInput, FlatList, Pressable } from 'react-native';
-import { ButtonSendComment } from '../components/buttonIcons';
+import { SendCommentButton } from '../components/buttonIcons';
 import Comment from '../components/comment';
-import PhotoPost from '../components/photoPost';
-
-const messages = [
-  {
-    id: '1',
-    text: 'Really love your most recent photo. I’ve been trying to capture the same thing for a few months and would love some tips!',
-    isMyMessage: false,
-  },
-  {
-    id: '2',
-    text: 'A fast 50mm like f1.8 would help with the bokeh. I’ve been using primes as they tend to get a bit sharper images.',
-    isMyMessage: true,
-  },
-  { id: '3', text: 'Thank you! That was very helpful!', isMyMessage: false },
-  {
-    id: '4',
-    text: 'I’ve been using primes as they tend to get a bit sharper images.',
-    isMyMessage: true,
-  },
-];
+import { useRoute } from '@react-navigation/native';
+import { Image } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateComments } from '../redux/operations';
 
 const CommentsScreen = () => {
-  const [comments, setComments] = useState(messages);
   const [comment, setComment] = useState('');
+  const { items } = useSelector(state => state.posts);
+  const dispatch = useDispatch();
+
+  const {
+    params: { postId },
+  } = useRoute();
+
+  const postIndex = items.findIndex(post => post.id === postId);
 
   const date = new Date();
-
   const options = {
     year: 'numeric',
     month: 'long',
@@ -49,19 +39,20 @@ const CommentsScreen = () => {
         isMyMessage: true,
         data: formattedDateTime,
       };
-      setComments([...comments, newComment]);
-    }
 
+      dispatch(updateComments({ postId: postId, newComments: newComment }));
+    }
     setComment('');
   };
-
   return (
     <Pressable onPress={Keyboard.dismiss} style={{ flex: 1 }}>
       <View style={styles.container}>
         <FlatList
-          data={comments}
+          data={items[postIndex].comments}
           keyExtractor={item => item.id}
-          ListHeaderComponent={<PhotoPost />}
+          ListHeaderComponent={
+            <Image style={styles.image} source={{ uri: items[postIndex].urlPhoto }} />
+          }
           ListHeaderComponentStyle={{ marginBottom: 32 }}
           renderItem={({ item }) => <Comment comment={item} />}
         />
@@ -72,7 +63,7 @@ const CommentsScreen = () => {
             style={styles.input}
             placeholder="Коментувати..."
           />
-          <ButtonSendComment addComment={addComment} />
+          <SendCommentButton addComment={addComment} />
         </View>
       </View>
     </Pressable>
@@ -98,6 +89,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingVertical: 11,
     borderRadius: 24,
+  },
+
+  image: {
+    height: 240,
+    borderRadius: 8,
   },
 });
 

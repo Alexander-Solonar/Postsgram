@@ -35,7 +35,19 @@ const ButtonArrowLeft = () => {
   );
 };
 
-const ButtonSendComment = ({ addComment }) => {
+const OpenCommentsButton = ({ postId }) => {
+  const navigation = useNavigation();
+  return (
+    <Feather
+      name="message-circle"
+      size={24}
+      color="#BDBDBD"
+      onPress={() => navigation.navigate('CommentsScreen', { postId: postId })}
+    />
+  );
+};
+
+const SendCommentButton = ({ addComment }) => {
   return (
     <Pressable style={styles.btnSendComment} onPress={() => addComment()}>
       <AntDesign name="arrowup" size={24} color="#fff" />
@@ -57,7 +69,7 @@ const DeleteButton = ({ handleDelete, isDisabled = true }) => {
   );
 };
 
-const createIconComponent = (IconComponent, name, focused) => {
+const CreationTabBarIcon = (IconComponent, name, focused) => {
   return <IconComponent name={name} size={24} color={focused ? '#fff' : 'rgba(33, 33, 33, 0.8)'} />;
 };
 
@@ -93,4 +105,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export { ButtonUpload, ButtonArrowLeft, ButtonSendComment, DeleteButton, createIconComponent };
+export {
+  ButtonUpload,
+  ButtonArrowLeft,
+  SendCommentButton,
+  DeleteButton,
+  CreationTabBarIcon,
+  OpenCommentsButton,
+};

@@ -26,12 +26,12 @@ const LoginScreen = () => {
   const handleFormSubmit = async ({ email, password }, { resetForm }) => {
     try {
       const user = await loginDB({ email, password });
-
       dispatch(
         setUserProfile({
           displayName: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
+          uid: user.uid,
         })
       );
 

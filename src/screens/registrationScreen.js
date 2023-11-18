@@ -12,7 +12,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { registerDB, updateUserProfile } from '../firebase/server';
+import { registerDB, updateUserProfile, writeDataToFirestore } from '../firebase/server';
 import { setUserProfile } from '../redux/authSlice';
 import FormRegistration from '../components/formRegistration';
 import image from '../assets/images/photo.jpg';
@@ -29,12 +29,14 @@ const RegistrationScreen = () => {
     try {
       const { user } = await registerDB({ email, password });
       await updateUserProfile({ displayName: login });
+      writeDataToFirestore(user.uid, login, email);
 
       dispatch(
         setUserProfile({
           displayName: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
+          uid: user.uid,
         })
       );
       resetForm();

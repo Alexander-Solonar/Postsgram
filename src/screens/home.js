@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import PostsScreen from './postsScreen';
 import CreatePostsScreen from './createPostsScreen';
-import { ButtonArrowLeft, ButtonUpload, createIconComponent } from '../components/buttonIcons';
+import { ButtonArrowLeft, ButtonUpload, CreationTabBarIcon } from '../components/buttonIcons';
 import ProfileScreen from './profileScreen';
 
 const Tabs = createBottomTabNavigator();
@@ -13,11 +13,11 @@ const Home = () => {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused }) => {
           if (route.name === 'Публікації') {
-            return createIconComponent(Feather, 'grid', focused);
+            return CreationTabBarIcon(Feather, 'grid', focused);
           } else if (route.name === 'Створити публікацію') {
-            return createIconComponent(Ionicons, 'add', focused);
+            return CreationTabBarIcon(Ionicons, 'add', focused);
           } else if (route.name === 'Профіль') {
-            return createIconComponent(Feather, 'user', focused);
+            return CreationTabBarIcon(Feather, 'user', focused);
           }
         },
         tabBarLabel: () => null,

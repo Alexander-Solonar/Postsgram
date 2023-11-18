@@ -14,7 +14,7 @@ const Comment = ({ comment }) => {
       <View style={styles.textContainer}>
         <Text style={{ fontSize: 13 }}>{comment.text}</Text>
         <View>
-          <Text style={dateStyle}>{comment.data ? comment.data : '20 березня 2022 р. 15:10'}</Text>
+          <Text style={dateStyle}>{comment.data}</Text>
         </View>
       </View>
     </View>

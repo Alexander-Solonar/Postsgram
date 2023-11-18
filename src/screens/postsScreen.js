@@ -3,25 +3,9 @@ import Post from '../components/post';
 import avatar from '../assets/images/user.jpg';
 import { useSelector } from 'react-redux';
 
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../config';
-
 const PostsScreen = () => {
   const user = useSelector(state => state.auth);
 
-  // const getDataFromFirestore = async () => {
-  //   try {
-  //     const snapshot = await getDocs(collection(db, 'users'));
-  //     // Перевіряємо у консолі отримані дані
-  //     snapshot.forEach(doc => console.log(`${doc.id} =>`, doc.data()));
-  //   } catch (error) {
-  //     console.log(error);
-  //     throw error;
-  //   }
-  // };
-
-  // getDataFromFirestore();
-  // console.log('D');
   return (
     <View style={styles.container}>
       <View style={styles.userInformContainer}>

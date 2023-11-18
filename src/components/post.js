@@ -1,62 +1,57 @@
-import { useSelector } from 'react-redux';
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  SafeAreaView,
-  FlatList,
-  Dimensions,
-  Pressable,
-} from 'react-native';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { StyleSheet, View, Text, Image, SafeAreaView, FlatList, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
+import { OpenCommentsButton } from './buttonIcons';
+import { fetchPosts } from '../redux/operations';
 
 const Post = ({ like }) => {
-  const posts = useSelector(state => state.posts);
+  const { items, isLoading } = useSelector(state => state.posts);
+  const uid = useSelector(state => state.auth.uid);
   const navigation = useNavigation();
-  const screenWidth = Dimensions.get('window').width;
-  const scale = 0.91;
-  const imageWidth = screenWidth * scale;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPosts(uid));
+  }, [dispatch, uid]);
 
   return (
     <SafeAreaView style={styles.post}>
-      <FlatList
-        data={posts}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => (
-          <View style={{ marginBottom: 32 }}>
-            <Image style={{ ...styles.image, width: imageWidth }} source={{ uri: item.urlPhoto }} />
-            <Text style={styles.title}>{item.title}</Text>
-            <View style={styles.informationBlock}>
-              <View style={styles.block}>
-                <Feather
-                  name="message-circle"
-                  size={24}
-                  color="#BDBDBD"
-                  onPress={() => navigation.navigate('CommentsScreen')}
-                />
-                <Text style={styles.counter}>0</Text>
-                {like && <Feather name="thumbs-up" size={24} color="#BDBDBD" />}
-                {like && <Text style={styles.counter}>0</Text>}
+      {isLoading && (
+        <FlatList
+          style={styles.wrapper}
+          data={items}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => (
+            <View style={styles.container}>
+              <Image style={styles.image} source={{ uri: item.urlPhoto }} />
+              <Text style={styles.title}>{item.title}</Text>
+              <View style={styles.informationBlock}>
+                <View style={styles.block}>
+                  <OpenCommentsButton postId={item.id} />
+                  <Text style={styles.counter}>{item.comments.length}</Text>
+                  {like && <Feather name="thumbs-up" size={24} color="#BDBDBD" />}
+                  {like && <Text style={styles.counter}>{item.likes}</Text>}
+                </View>
+                <Pressable
+                  style={styles.block}
+                  onPress={() =>
+                    navigation.navigate('MapScreen', {
+                      location: item.location,
+                      title: item.title,
+                      place: item.place,
+                    })
+                  }
+                >
+                  <Feather name="map-pin" size={24} color="#BDBDBD" />
+                  <Text style={styles.location}>{item.place}</Text>
+                </Pressable>
               </View>
-              <Pressable
-                style={styles.block}
-                onPress={() =>
-                  navigation.navigate('MapScreen', {
-                    location: item.location,
-                    title: item.title,
-                    place: item.place,
-                  })
-                }
-              >
-                <Feather name="map-pin" size={24} color="#BDBDBD" />
-                <Text style={styles.location}>{item.place}</Text>
-              </Pressable>
             </View>
-          </View>
-        )}
-      />
+          )}
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -65,7 +60,13 @@ const styles = StyleSheet.create({
   post: {
     flex: 1,
     alignItems: 'center',
+    width: '100%',
   },
+
+  wrapper: { width: '100%' },
+
+  container: { marginBottom: 32 },
+
   image: {
     height: 240,
     borderRadius: 8,
