@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import Post from '../components/post';
 import image from '../assets/images/photo.jpg';
 import avatar from '../assets/images/user.jpg';
-import { ButtonUpload } from '../components/buttonIcons';
+import { UploadButton } from '../components/buttonIcons';
 import iconDelete from '../assets/images/iconDelete.png';
 
 const ProfileScreen = () => {
@@ -17,7 +17,7 @@ const ProfileScreen = () => {
           <Image style={styles.iconDeleteAvatar} source={iconDelete} />
         </View>
         <View style={styles.btnOut}>
-          <ButtonUpload />
+          <UploadButton />
         </View>
         <Text style={styles.title}>{user.displayName}</Text>
         <Post like={true} />

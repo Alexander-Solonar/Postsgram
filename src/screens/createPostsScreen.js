@@ -18,7 +18,8 @@ import { Formik } from 'formik';
 import { setPostPhoto } from '../redux/postPhotoSlice';
 import { DeleteButton } from '../components/buttonIcons';
 import PhotoPost from '../components/photoPost';
-import ButtonPrimary from '../components/buttonPrimary';
+import PrimaryButton from '../components/primaryButton';
+
 import { addPost } from '../redux/operations';
 
 const screenHeight = Dimensions.get('window').height;
@@ -42,7 +43,6 @@ const CreatePostsScreen = () => {
       try {
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
-          console.log('Permission to access location was denied');
           return;
         }
         let location = await Location.getCurrentPositionAsync({});
@@ -52,7 +52,7 @@ const CreatePostsScreen = () => {
         };
         setLocation(coords);
       } catch (error) {
-        console.error('Error while requesting location:', error);
+        alert(error);
       }
     })();
   }, []);
@@ -120,7 +120,7 @@ const CreatePostsScreen = () => {
                   </View>
 
                   <View style={styles.btnContainer}>
-                    <ButtonPrimary
+                    <PrimaryButton
                       text="Опубліковати"
                       isDisabled={!postPhoto || !values.place.trim() || !values.title.trim()}
                       handleSubmit={handleSubmit}

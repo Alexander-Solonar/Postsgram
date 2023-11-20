@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import PostsScreen from './postsScreen';
 import CreatePostsScreen from './createPostsScreen';
-import { ButtonArrowLeft, ButtonUpload, CreationTabBarIcon } from '../components/buttonIcons';
+import { ArrowLeftButton, UploadButton, CreationTabBarIcon } from '../components/buttonIcons';
 import ProfileScreen from './profileScreen';
 
 const Tabs = createBottomTabNavigator();
@@ -31,7 +31,7 @@ const Home = () => {
         component={PostsScreen}
         options={{
           ...styleHeader,
-          headerRight: () => <ButtonUpload />,
+          headerRight: () => <UploadButton />,
         }}
       />
       <Tabs.Screen
@@ -39,7 +39,7 @@ const Home = () => {
         component={CreatePostsScreen}
         options={{
           ...styleHeader,
-          headerLeft: () => <ButtonArrowLeft />,
+          headerLeft: () => <ArrowLeftButton />,
           tabBarStyle: { display: 'none' },
         }}
       />

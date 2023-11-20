@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 
 import { Formik } from 'formik';
-import ButtonPrimary from './buttonPrimary';
+import PrimaryButton from './primaryButton';
 
 const FormLogin = ({ handleFormSubmit }) => {
   const [isFocused, setIsFocused] = useState('');
@@ -42,7 +42,7 @@ const FormLogin = ({ handleFormSubmit }) => {
               onBlur={() => setIsFocused('')}
             />
           </View>
-          <ButtonPrimary text={'Увійти'} handleSubmit={handleSubmit} />
+          <PrimaryButton text={'Увійти'} handleSubmit={handleSubmit} />
         </View>
       )}
     </Formik>

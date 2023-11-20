@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
 import { Formik } from 'formik';
-import ButtonPrimary from './buttonPrimary';
+import PrimaryButton from './primaryButton';
 
 const FormRegistration = ({ handleFormSubmit }) => {
   const [isFocused, setIsFocused] = useState('');
@@ -51,7 +51,7 @@ const FormRegistration = ({ handleFormSubmit }) => {
               onBlur={() => setIsFocused('')}
             />
           </View>
-          <ButtonPrimary text={'Зареєстуватися'} handleSubmit={handleSubmit} />
+          <PrimaryButton text={'Зареєстуватися'} handleSubmit={handleSubmit} />
         </View>
       )}
     </Formik>

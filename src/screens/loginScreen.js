@@ -38,7 +38,7 @@ const LoginScreen = () => {
       resetForm();
       navigation.navigate('Home');
     } catch (error) {
-      console.error('Помилка входу:', error);
+      alert(error);
     }
   };
 

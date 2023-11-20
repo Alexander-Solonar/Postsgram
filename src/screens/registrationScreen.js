@@ -42,7 +42,7 @@ const RegistrationScreen = () => {
       resetForm();
       navigation.navigate('Home');
     } catch (error) {
-      console.error('Помилка реєстрації:', error);
+      alert(error);
     }
   };
 

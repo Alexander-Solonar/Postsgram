@@ -10,26 +10,20 @@ import { updateComments } from '../redux/operations';
 const CommentsScreen = () => {
   const [comment, setComment] = useState('');
   const { items } = useSelector(state => state.posts);
+  const uid = useSelector(state => state.auth.uid);
   const dispatch = useDispatch();
+  const post = items.find(post => post.id === postId);
 
   const {
     params: { postId },
   } = useRoute();
 
-  const postIndex = items.findIndex(post => post.id === postId);
-
-  const date = new Date();
-  const options = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  };
-
-  const formattedDate = date.toLocaleDateString('uk-UA', options);
   const formattedDateTime =
-    formattedDate.replace(/р\.$/, '') +
+    new Date()
+      .toLocaleDateString('uk-UA', { year: 'numeric', month: 'long', day: 'numeric' })
+      .replace(/р\.$/, '') +
     ' | ' +
-    date.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
+    new Date().toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
 
   const addComment = () => {
     if (comment.trim()) {
@@ -39,8 +33,7 @@ const CommentsScreen = () => {
         isMyMessage: true,
         data: formattedDateTime,
       };
-
-      dispatch(updateComments({ postId: postId, newComments: newComment }));
+      dispatch(updateComments({ docId: uid, postId: postId, newComments: newComment }));
     }
     setComment('');
   };
@@ -48,11 +41,9 @@ const CommentsScreen = () => {
     <Pressable onPress={Keyboard.dismiss} style={{ flex: 1 }}>
       <View style={styles.container}>
         <FlatList
-          data={items[postIndex].comments}
+          data={post.comments}
           keyExtractor={item => item.id}
-          ListHeaderComponent={
-            <Image style={styles.image} source={{ uri: items[postIndex].postPhoto }} />
-          }
+          ListHeaderComponent={<Image style={styles.image} source={{ uri: post.postPhoto }} />}
           ListHeaderComponentStyle={{ marginBottom: 32 }}
           renderItem={({ item }) => <Comment comment={item} />}
         />

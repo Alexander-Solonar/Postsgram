@@ -1,6 +1,6 @@
 import { StyleSheet, Pressable, Text } from 'react-native';
 
-const ButtonPrimary = ({ text, handleSubmit, isDisabled = false }) => {
+const PrimaryButton = ({ text, handleSubmit, isDisabled = false }) => {
   const buttonStyle = { ...styles.button, backgroundColor: isDisabled ? '#F6F6F6' : '#FF6C00' };
   const textButtonStyle = { ...styles.textBtn, color: isDisabled ? '#BDBDBD' : '#fff' };
 
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ButtonPrimary;
+export default PrimaryButton;

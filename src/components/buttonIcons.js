@@ -4,7 +4,7 @@ import { AntDesign, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Logout } from '../firebase/server';
 
-const ButtonUpload = () => {
+const UploadButton = () => {
   const navigation = useNavigation();
   return (
     <AntDesign
@@ -20,7 +20,7 @@ const ButtonUpload = () => {
   );
 };
 
-const ButtonArrowLeft = () => {
+const ArrowLeftButton = () => {
   const navigation = useNavigation();
   return (
     <Feather
@@ -35,21 +35,27 @@ const ButtonArrowLeft = () => {
   );
 };
 
-const OpenCommentsButton = ({ postId }) => {
-  const navigation = useNavigation();
+const OpenCommentsButton = ({ item }) => {
+  const colorIcon = item.comments.length > 0 ? '#FF6C00' : '#BDBDBD';
+
   return (
-    <Feather
-      name="message-circle"
-      size={24}
-      color="#BDBDBD"
-      onPress={() => navigation.navigate('CommentsScreen', { postId: postId })}
-    />
+    <Feather style={styles.openCommentsBtn} name="message-circle" size={24} color={colorIcon} />
   );
+};
+
+const LikeButton = ({ item }) => {
+  const colorIcon = item.likes > 0 ? '#FF6C00' : '#BDBDBD';
+
+  return <Feather name="thumbs-up" size={24} color={colorIcon} />;
+};
+
+const LocationButton = () => {
+  return <Feather name="map-pin" size={24} color="#BDBDBD" />;
 };
 
 const SendCommentButton = ({ addComment }) => {
   return (
-    <Pressable style={styles.btnSendComment} onPress={() => addComment()}>
+    <Pressable style={styles.sendCommentBtn} onPress={() => addComment()}>
       <AntDesign name="arrowup" size={24} color="#fff" />
     </Pressable>
   );
@@ -83,7 +89,7 @@ const styles = StyleSheet.create({
     marginLeft: 16,
   },
 
-  btnSendComment: {
+  sendCommentBtn: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
@@ -96,6 +102,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#FF6C00',
   },
 
+  openCommentsBtn: {
+    transform: [{ rotate: '-90deg' }],
+  },
+
   btnDelete: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -106,10 +116,12 @@ const styles = StyleSheet.create({
 });
 
 export {
-  ButtonUpload,
-  ButtonArrowLeft,
+  UploadButton,
+  ArrowLeftButton,
   SendCommentButton,
+  LikeButton,
+  LocationButton,
+  OpenCommentsButton,
   DeleteButton,
   CreationTabBarIcon,
-  OpenCommentsButton,
 };

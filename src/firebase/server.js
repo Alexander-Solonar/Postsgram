@@ -52,10 +52,10 @@ export const writeDataToFirestore = async (userId, login, email, photoURL = null
       displayName: login,
       email: email,
       photoURL: photoURL,
+      posts: [],
     });
-    console.log('Document written with ID: ', userId);
-  } catch (e) {
-    console.error('Error adding document: ', e);
-    throw e;
+  } catch (error) {
+    console.error('Error adding document: ', error);
+    throw error;
   }
 };
