@@ -8,15 +8,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateComments } from '../redux/operations';
 
 const CommentsScreen = () => {
+  const {
+    params: { postId },
+  } = useRoute();
+
   const [comment, setComment] = useState('');
   const { items } = useSelector(state => state.posts);
   const uid = useSelector(state => state.auth.uid);
   const dispatch = useDispatch();
   const post = items.find(post => post.id === postId);
-
-  const {
-    params: { postId },
-  } = useRoute();
 
   const formattedDateTime =
     new Date()

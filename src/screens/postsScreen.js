@@ -1,6 +1,5 @@
 import { StyleSheet, View, Text, Image } from 'react-native';
 import Post from '../components/post';
-import avatar from '../assets/images/user.jpg';
 import { useSelector } from 'react-redux';
 
 const PostsScreen = () => {
@@ -9,7 +8,7 @@ const PostsScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.userInformContainer}>
-        <Image style={styles.userPhoto} source={avatar} />
+        <Image style={styles.userPhoto} source={{ uri: user.photoURL }} />
         <View>
           <Text style={styles.userLogin}>{user.displayName}</Text>
           <Text style={styles.userEmail}>{user.email}</Text>

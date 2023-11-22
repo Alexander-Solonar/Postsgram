@@ -2,7 +2,6 @@ import { ImageBackground, StyleSheet, View, Text, Image } from 'react-native';
 import { useSelector } from 'react-redux';
 import Post from '../components/post';
 import image from '../assets/images/photo.jpg';
-import avatar from '../assets/images/user.jpg';
 import { UploadButton } from '../components/buttonIcons';
 import iconDelete from '../assets/images/iconDelete.png';
 
@@ -13,7 +12,7 @@ const ProfileScreen = () => {
     <ImageBackground style={styles.imageBackground} source={image} resizeMode="cover">
       <View style={styles.container}>
         <View style={styles.userAvatarContainer}>
-          <Image style={styles.userPhoto} source={avatar} />
+          <Image style={styles.userPhoto} source={{ uri: user.photoURL }} />
           <Image style={styles.iconDeleteAvatar} source={iconDelete} />
         </View>
         <View style={styles.btnOut}>

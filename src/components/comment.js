@@ -1,7 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { useSelector } from 'react-redux';
 
 const Comment = ({ comment }) => {
+  const avatarUser = useSelector(state => state.auth.photoURL);
+
   const containerStyle = comment.isMyMessage
     ? styles.myMessageContainer
     : styles.otherMessageContainer;
@@ -10,7 +13,7 @@ const Comment = ({ comment }) => {
 
   return (
     <View style={containerStyle}>
-      <Image style={styles.avatar} source={require('../assets/images/user.jpg')} />
+      <Image style={styles.avatar} source={{ uri: avatarUser }} />
       <View style={styles.textContainer}>
         <Text style={{ fontSize: 13 }}>{comment.text}</Text>
         <View>

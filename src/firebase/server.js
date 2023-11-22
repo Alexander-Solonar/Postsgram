@@ -45,7 +45,7 @@ export const Logout = async () => {
   }
 };
 
-export const writeDataToFirestore = async (userId, login, email, photoURL = null) => {
+export const writeDataToFirestore = async (userId, login, email, photoURL) => {
   try {
     const docRef = doc(db, 'users', userId);
     await setDoc(docRef, {

@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   ImageBackground,
   StyleSheet,
@@ -17,19 +17,20 @@ import { setUserProfile } from '../redux/authSlice';
 import FormRegistration from '../components/formRegistration';
 import image from '../assets/images/photo.jpg';
 import iconAdd from '../assets/images/iconAdd.png';
+import { setPostPhoto } from '../redux/postPhotoSlice';
 
 const screenHeight = Dimensions.get('window').height;
 const paddingBottomContainer = (screenHeight * 9.6) / 100;
 
 const RegistrationScreen = () => {
   const navigation = useNavigation();
+  const postPhoto = useSelector(state => state.postPhoto);
   const dispatch = useDispatch();
-
   const handleFormSubmit = async ({ login, email, password }, { resetForm }) => {
     try {
       const { user } = await registerDB({ email, password });
-      await updateUserProfile({ displayName: login });
-      writeDataToFirestore(user.uid, login, email);
+      await updateUserProfile({ displayName: login, photoURL: postPhoto });
+      writeDataToFirestore(user.uid, login, email, postPhoto);
 
       dispatch(
         setUserProfile({
@@ -40,6 +41,7 @@ const RegistrationScreen = () => {
         })
       );
       resetForm();
+      dispatch(setPostPhoto(''));
       navigation.navigate('Home');
     } catch (error) {
       alert(error);
@@ -55,7 +57,13 @@ const RegistrationScreen = () => {
         >
           <View style={styles.container}>
             <View style={styles.userAvatar}>
-              <Image style={styles.iconAddAvatar} source={iconAdd} />
+              {postPhoto && <Image style={styles.image} source={{ uri: postPhoto }} />}
+              <Pressable
+                style={styles.iconCamera}
+                onPress={() => navigation.navigate('CameraScreen')}
+              >
+                <Image style={styles.iconAddAvatar} source={iconAdd} />
+              </Pressable>
             </View>
             <Text style={styles.title}>Реєстрація</Text>
             <FormRegistration handleFormSubmit={handleFormSubmit} />
@@ -82,6 +90,16 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: '#fff',
+  },
+
+  iconCamera: {
+    display: 'flex',
+    flex: 1,
+  },
+
+  image: {
+    height: '100%',
+    borderRadius: 16,
   },
 
   userAvatar: {

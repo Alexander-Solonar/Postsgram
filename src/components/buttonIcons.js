@@ -3,13 +3,17 @@ import { StyleSheet, Pressable } from 'react-native';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Logout } from '../firebase/server';
+import { useDispatch } from 'react-redux';
+import { setPostPhoto } from '../redux/postPhotoSlice';
 
 const UploadButton = () => {
+  const dispatch = useDispatch();
   const navigation = useNavigation();
   return (
     <AntDesign
       onPress={() => {
         Logout();
+        dispatch(setPostPhoto(''));
         navigation.navigate('Login');
       }}
       style={styles.btnUpload}
