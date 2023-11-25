@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Pressable } from 'react-native';
-import { AntDesign, Feather } from '@expo/vector-icons';
+import { AntDesign, Feather, MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { Logout } from '../firebase/server';
 import { useDispatch } from 'react-redux';
@@ -83,6 +83,28 @@ const CreationTabBarIcon = (IconComponent, name, focused) => {
   return <IconComponent name={name} size={24} color={focused ? '#fff' : 'rgba(33, 33, 33, 0.8)'} />;
 };
 
+const AddAvatarButton = () => {
+  return (
+    <MaterialIcons
+      style={styles.addAvatarBtn}
+      name="add-circle-outline"
+      size={28}
+      color="#FF6C00"
+    />
+  );
+};
+
+const DeleteAvatarButton = () => {
+  return (
+    <MaterialIcons
+      style={styles.deleteAvatarBtn}
+      name="add-circle-outline"
+      size={28}
+      color="#BDBDBD"
+    />
+  );
+};
+
 const styles = StyleSheet.create({
   btnUpload: {
     marginRight: 16,
@@ -117,6 +139,18 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 40,
   },
+  addAvatarBtn: {
+    position: 'absolute',
+    right: -12,
+    bottom: 20,
+  },
+
+  deleteAvatarBtn: {
+    position: 'absolute',
+    transform: [{ rotate: '-45deg' }],
+    right: -12,
+    bottom: 20,
+  },
 });
 
 export {
@@ -128,4 +162,6 @@ export {
   OpenCommentsButton,
   DeleteButton,
   CreationTabBarIcon,
+  AddAvatarButton,
+  DeleteAvatarButton,
 };

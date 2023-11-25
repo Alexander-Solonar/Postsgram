@@ -2,23 +2,25 @@ import { ImageBackground, StyleSheet, View, Text, Image } from 'react-native';
 import { useSelector } from 'react-redux';
 import Post from '../components/post';
 import image from '../assets/images/photo.jpg';
-import { UploadButton } from '../components/buttonIcons';
-import iconDelete from '../assets/images/iconDelete.png';
+import { UploadButton, DeleteAvatarButton } from '../components/buttonIcons';
+import { Spinner } from './spinner';
 
 const ProfileScreen = () => {
   const user = useSelector(state => state.auth);
+  const { isLoading } = useSelector(state => state.posts);
 
   return (
     <ImageBackground style={styles.imageBackground} source={image} resizeMode="cover">
       <View style={styles.container}>
         <View style={styles.userAvatarContainer}>
           <Image style={styles.userPhoto} source={{ uri: user.photoURL }} />
-          <Image style={styles.iconDeleteAvatar} source={iconDelete} />
+          <DeleteAvatarButton />
         </View>
         <View style={styles.btnOut}>
           <UploadButton />
         </View>
         <Text style={styles.title}>{user.displayName}</Text>
+        {!isLoading && <Spinner />}
         <Post like={true} />
       </View>
     </ImageBackground>
@@ -53,12 +55,6 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 16,
-  },
-
-  iconDeleteAvatar: {
-    position: 'absolute',
-    right: -12,
-    bottom: 20,
   },
 
   btnOut: {

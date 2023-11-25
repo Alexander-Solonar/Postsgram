@@ -6,6 +6,8 @@ import { Camera } from 'expo-camera';
 import * as MediaLibrary from 'expo-media-library';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { setPostPhoto } from '../redux/postPhotoSlice';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { storage } from '../../config';
 
 const CameraScreen = () => {
   const [cameraRef, setCameraRef] = useState(null);
@@ -23,7 +25,16 @@ const CameraScreen = () => {
   const handlePress = async () => {
     if (cameraRef) {
       const { uri } = await cameraRef.takePictureAsync();
-      dispatch(setPostPhoto(uri));
+
+      const storageRef = ref(storage, 'images/');
+      const filename = uri.split('/').pop();
+      const fileRef = ref(storageRef, filename);
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      await uploadBytes(fileRef, blob);
+      const downloadURL = await getDownloadURL(fileRef);
+      dispatch(setPostPhoto(downloadURL));
+
       navigation.goBack();
     }
   };

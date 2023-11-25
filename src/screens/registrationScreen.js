@@ -15,8 +15,8 @@ import { useNavigation } from '@react-navigation/native';
 import { registerDB, updateUserProfile, writeDataToFirestore } from '../firebase/server';
 import { setUserProfile } from '../redux/authSlice';
 import FormRegistration from '../components/formRegistration';
+import { AddAvatarButton } from '../components/buttonIcons';
 import image from '../assets/images/photo.jpg';
-import iconAdd from '../assets/images/iconAdd.png';
 import { setPostPhoto } from '../redux/postPhotoSlice';
 
 const screenHeight = Dimensions.get('window').height;
@@ -62,7 +62,7 @@ const RegistrationScreen = () => {
                 style={styles.iconCamera}
                 onPress={() => navigation.navigate('CameraScreen')}
               >
-                <Image style={styles.iconAddAvatar} source={iconAdd} />
+                <AddAvatarButton />
               </Pressable>
             </View>
             <Text style={styles.title}>Реєстрація</Text>
@@ -111,12 +111,6 @@ const styles = StyleSheet.create({
     transform: [{ translateX: 50 }],
     borderRadius: 16,
     backgroundColor: '#F6F6F6',
-  },
-
-  iconAddAvatar: {
-    position: 'absolute',
-    right: -12,
-    bottom: 20,
   },
 
   title: {

@@ -1,9 +1,11 @@
 import { StyleSheet, View, Text, Image } from 'react-native';
 import Post from '../components/post';
 import { useSelector } from 'react-redux';
+import { Spinner } from './spinner';
 
 const PostsScreen = () => {
   const user = useSelector(state => state.auth);
+  const { isLoading } = useSelector(state => state.posts);
 
   return (
     <View style={styles.container}>
@@ -14,6 +16,7 @@ const PostsScreen = () => {
           <Text style={styles.userEmail}>{user.email}</Text>
         </View>
       </View>
+      {!isLoading && <Spinner />}
       <Post />
     </View>
   );
